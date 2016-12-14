@@ -19,11 +19,14 @@ import org.springframework.web.bind.annotation.RestController;
 @ExposesResourceFor(User.class)
 public class UserController {
 
-    @Autowired
-    UserService userService;
+    private final UserService userService;
+    private final EntityLinks entityLinks;
 
     @Autowired
-    EntityLinks entityLinks;
+    public UserController(UserService userService, EntityLinks entityLinks) {
+        this.userService = userService;
+        this.entityLinks = entityLinks;
+    }
 
     /**
      * Creates a {@link User} and returns the newly created object.
