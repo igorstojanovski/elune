@@ -16,11 +16,11 @@ import static org.mockito.Mockito.when;
 
 public class UserControllerTest {
 
-    public static final long NEW_USER_ID = 1L;
-    public static final String NEW_RESOURCE_URL = "http://localhost/api/user/1";
-    UserService userService;
-    EntityLinks entityLinks;
-    UserController userController;
+    private static final long NEW_USER_ID = 1L;
+    private static final String NEW_RESOURCE_URL = "http://localhost/api/user/1";
+    private UserService userService;
+    private EntityLinks entityLinks;
+    private UserController userController;
 
     private User userRequested;
     private User userCreated;
