@@ -1,16 +1,15 @@
 language: java
 jdk:
-  - oraclejdk8
-
+- oraclejdk8
 script:
-  - mvn install -DskipITs
-  - mvn clean test-compile failsafe:integration-test
+- mvn install -DskipITs
+- mvn clean test-compile failsafe:integration-test
 deploy:
- provider: heroku
- api-key:
-  secure: $HEROKU_API_KEY
+  provider: heroku
+  api_key:
+    secure: HIx8CozQd601gTfLaGxufHwZuwoTVXMFFyFvFU7TXio4AWwAjbHfh3/Go5UU5bZzHx8JwGEuOwhXcziz+tdZTeDbrObA/xwwOigsyFkIixMKhYjcub4EiD19ysa+70dwC+LqwzyOnn5osphuAK/X6WmMRHk3H2F/uvNO2ex6sEAiLkOQhu4zu0lQnHd/UyR4Tuy3gK8eik+BxlAsWczws5cMu07RTRPnSx+XJGY/ItYIw8oIs6P7C7crKEJWRBXEbbrUh79NKl6sVQp0EbpFwuLOJkW36LEHxVmC90eLOzL+1rwV6aTumrcGLYcl+gi8wNqJHCw28LB5ICrlYdAYLxGVyM6Pa7G/LchjtK9AdtdDQ+bnMAzcivLV7KfLrIiLCk6HolQsDfm/iaEuwiYi16YzNjGvW/lPE0qgzxvOZkugU1x4nUiY/6HO7fQsdqrbySo9Qjkqib9+G7ZPiff+nl9oj/R8tSjw9+4sFgRz9DtnWmwJC5oMmZyIPPTBOPUBQcxYTCGchGBJFou6YFzX5BZ5dhEExhX9MLIJ4MLTqo89dqMU1feeFTk1A9omPp5qsBZQFN3ufXYkTgaM3ygTocnziMgpo8Fx/zJkX77zXjuo0cnC9W8WcGGcDPuUySVsvO5aGKU5slBqY2U88EA7pR+RsvY9Hp1AAL7LdD5yy3k=
   app:
     master: elune-prod
     all-branches: elune-dev
   run:
-    - java $JAVA_OPTS -Dserver.port=$PORT -jar target/*.jar
+  - java $JAVA_OPTS -Dserver.port=$PORT -jar target/*.jar
