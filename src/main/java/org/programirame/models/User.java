@@ -1,11 +1,9 @@
 package org.programirame.models;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
+@Table(name = "app_user")
 public class User {
 
     @Id
