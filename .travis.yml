@@ -6,8 +6,7 @@ script:
 - mvn clean test-compile failsafe:integration-test
 deploy:
   provider: heroku
-  api_key:
-    secure: QY1TCMFfKv7Ln57/d2CQMF24KB6WQAokguz3MZMb6jCMBoYXyFtU23wsOncNvGa8eKEuVJvjOkIE4OYMalwJ7MSOCzLM6IpxACSHuF8ZOs3EhrGcuSMb0oWJpPEqj0SKGAQ4SL7lmL80WlIXSfICJl+iRiJMvJOZ3cKJkkNu8/cf3uGv1SHTaegR0zXPVbcoOtnoFg4Tdhk7S4zecJUlJXqEfd/Bu02AUprKmlHkxRORgbfIi9Rzc8TsZVvxZmaN/IGUNMkZuiuwIp32ihtkONLRYLpVaNjbSvonpCvQWj1xt/Zck/k11iAErWdxdQwmzRfde14HLWKtd2+CbzQWiMF7H4dlRr/B2v3H+xI5zIgyOmOqlPd5IjxlCw0hoLw/Ghv3/x7JQTZ4H0cEPdiPqi3D+72Q7RkIvCweVvubRs/IqSm6r/BzS5gnoDABbeS/FI39eNRanH1LiZwLdhvgFpRAMicazG4lb8C/PI1DRJisWgZxZ2uRSGZU6ZcuQDmM78ntPkSEJMFiF0RIwT7rbcXXf3zqOPOcJ+S5yS88qWi/UTT7n1ViSbDWh4XWAcR+encpIIwHbsLL3z645uJ8M8nqaYy7Icq1tqxOptDszkxNzT9AeY2DnHBaVh+F4s6dMSR4jcJD117E0ryGig+RBOy48JrGFBVWwwG9dce/9d0=
+  api_key: HEROKU_API_KEY
   app: elune-dev
   on:
     repo: igorstojanovski/elune
