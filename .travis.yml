@@ -5,3 +5,12 @@ jdk:
 script:
   - mvn install -DskipITs
   - mvn clean test-compile failsafe:integration-test
+deploy:
+ provider: heroku
+ api-key:
+  secure: $HEROKU_API_KEY
+  app:
+    master: elune-prod
+    all-branches: elune-dev
+  run:
+    - java $JAVA_OPTS -Dserver.port=$PORT -jar target/*.jar
