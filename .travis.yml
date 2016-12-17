@@ -6,7 +6,7 @@ script:
 - mvn clean test-compile failsafe:integration-test
 deploy:
   provider: heroku
-  api_key: HEROKU_API_KEY
+  api_key: '09bbb44e-2152-4690-9d11-500e3dc909d4'
   app: elune-dev
   on:
     repo: igorstojanovski/elune
