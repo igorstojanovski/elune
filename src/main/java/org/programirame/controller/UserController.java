@@ -14,6 +14,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @RestController
 @RequestMapping("/api/user")
 @ExposesResourceFor(User.class)
@@ -42,4 +45,26 @@ public class UserController {
         return new ResponseEntity<>(resource, HttpStatus.CREATED);
     }
 
+    /**
+     * Service for retrieving all the users.
+     *
+     * @return list of all users.
+     */
+    @RequestMapping(method = RequestMethod.GET)
+    public ResponseEntity<List<Resource<User>>> getAllUsers() {
+        List<User> users = userService.getAllUsers();
+        return new ResponseEntity<>(getUserResources(users), HttpStatus.CREATED);
+    }
+
+    private Resource<User> getUserResource(User user) {
+        Resource<User> resource = new Resource<>(userService.createUser(user));
+        resource.add(entityLinks.linkToSingleResource(User.class, resource.getContent().getId()));
+
+        return resource;
+    }
+
+    private List<Resource<User>> getUserResources(List<User> users) {
+
+        return users.stream().map(this::getUserResource).collect(Collectors.toList());
+    }
 }
