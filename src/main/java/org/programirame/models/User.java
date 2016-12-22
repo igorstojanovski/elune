@@ -15,6 +15,7 @@ public class User {
     private String surname;
     private String username;
     private String password;
+    private UserTypes userType = UserTypes.SUBSCRIBER;
 
     public User(String name, String surname, String username, String password) {
         this.name = name;
@@ -65,5 +66,14 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    @Enumerated(EnumType.STRING)
+    public UserTypes getUserType() {
+        return userType;
+    }
+
+    public void setUserType(UserTypes userType) {
+        this.userType = userType;
     }
 }
