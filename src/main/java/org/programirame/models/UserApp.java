@@ -5,8 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "app_user")
-public class User {
+public class UserApp {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -17,14 +16,14 @@ public class User {
     private String password;
     private UserTypes userType = UserTypes.SUBSCRIBER;
 
-    public User(String name, String surname, String username, String password) {
+    public UserApp(String name, String surname, String username, String password) {
         this.name = name;
         this.surname = surname;
         this.username = username;
         this.password = password;
     }
 
-    public User() {
+    public UserApp() {
     }
 
     public long getId() {

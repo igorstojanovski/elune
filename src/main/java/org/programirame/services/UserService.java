@@ -1,6 +1,6 @@
 package org.programirame.services;
 
-import org.programirame.models.User;
+import org.programirame.models.UserApp;
 import org.programirame.repositories.UserRepository;
 import org.springframework.stereotype.Service;
 
@@ -17,13 +17,13 @@ public class UserService {
     }
 
     /**
-     * Creates a new user in the database.
+     * Creates a new userApp in the database.
      *
-     * @param user the user to be created.
-     * @return the newly created user with ID set.
+     * @param userApp the userApp to be created.
+     * @return the newly created userApp with ID set.
      */
-    public User createUser(User user) {
-        return userRepository.save(user);
+    public UserApp createUser(UserApp userApp) {
+        return userRepository.save(userApp);
     }
 
     /**
@@ -31,14 +31,14 @@ public class UserService {
      *
      * @return list of all the users.
      */
-    public List<User> getAllUsers() {
+    public List<UserApp> getAllUsers() {
         return iterableToList(userRepository.findAll());
     }
 
-    private List<User> iterableToList(Iterable<User> iterable) {
-        List<User> users = new ArrayList<>();
-        iterable.forEach(users::add);
+    private List<UserApp> iterableToList(Iterable<UserApp> iterable) {
+        List<UserApp> userApps = new ArrayList<>();
+        iterable.forEach(userApps::add);
 
-        return users;
+        return userApps;
     }
 }

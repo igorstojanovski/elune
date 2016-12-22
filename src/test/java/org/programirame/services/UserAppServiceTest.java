@@ -3,20 +3,20 @@ package org.programirame.services;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
-import org.programirame.models.User;
+import org.programirame.models.UserApp;
 import org.programirame.repositories.UserRepository;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class UserServiceTest {
+public class UserAppServiceTest {
 
     private UserRepository userRepository;
     private UserService userService;
 
-    private User userRequested;
-    private User userCreated;
+    private UserApp userAppRequested;
+    private UserApp userAppCreated;
 
     @Before
     public void init() {
@@ -24,19 +24,19 @@ public class UserServiceTest {
 
         userService = new UserService(userRepository);
 
-        userRequested = new User("igor", "stojanovski", "igorce", "igorce");
-        userCreated = new User("igor", "stojanovski", "igorce", "igorce");
-        userCreated.setId(1);
+        userAppRequested = new UserApp("igor", "stojanovski", "igorce", "igorce");
+        userAppCreated = new UserApp("igor", "stojanovski", "igorce", "igorce");
+        userAppCreated.setId(1);
 
-        when(userRepository.save(userRequested)).thenReturn(userCreated);
+        when(userRepository.save(userAppRequested)).thenReturn(userAppCreated);
     }
 
     @Test
     public void shouldCallUserRepositorySaveMethod() {
-        User user = userService.createUser(userRequested);
+        UserApp userApp = userService.createUser(userAppRequested);
 
-        Mockito.verify(userRepository).save(userRequested);
-        assertEquals(user, userCreated);
+        Mockito.verify(userRepository).save(userAppRequested);
+        assertEquals(userApp, userAppCreated);
     }
 
 

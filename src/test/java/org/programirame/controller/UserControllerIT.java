@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.programirame.models.User;
+import org.programirame.models.UserApp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -24,7 +24,7 @@ public class UserControllerIT {
 
     @Autowired
     private MockMvc mockMvc;
-    private User userRequested;
+    private UserApp userAppRequested;
 
     public static String asJsonString(final Object obj) {
         try {
@@ -39,10 +39,10 @@ public class UserControllerIT {
     @Test
     public void shouldCreateNewUser() throws Exception {
 
-        userRequested = new User("igor", "stojanovski", "igorce", "igorce");
+        userAppRequested = new UserApp("igor", "stojanovski", "igorce", "igorce");
 
         MvcResult result = mockMvc.perform(post("/api/user")
-                .content(asJsonString(userRequested))
+                .content(asJsonString(userAppRequested))
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().is(201))

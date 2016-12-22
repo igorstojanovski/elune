@@ -1,7 +1,7 @@
 package org.programirame.controller;
 
 
-import org.programirame.models.User;
+import org.programirame.models.UserApp;
 import org.programirame.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.EntityLinks;
@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/user")
-@ExposesResourceFor(User.class)
+@ExposesResourceFor(UserApp.class)
 public class UserController {
 
     private final UserService userService;
@@ -32,16 +32,16 @@ public class UserController {
     }
 
     /**
-     * Creates a {@link User} and returns the newly created object.
+     * Creates a {@link UserApp} and returns the newly created object.
      *
-     * @param user The new User resource to be created.
-     * @return Newly created {@link User} object.
+     * @param userApp The new UserApp resource to be created.
+     * @return Newly created {@link UserApp} object.
      */
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity registerNewUser(@RequestBody User user) {
+    public ResponseEntity registerNewUser(@RequestBody UserApp userApp) {
 
-        Resource<User> resource = new Resource<>(userService.createUser(user));
-        resource.add(entityLinks.linkToSingleResource(User.class, resource.getContent().getId()));
+        Resource<UserApp> resource = new Resource<>(userService.createUser(userApp));
+        resource.add(entityLinks.linkToSingleResource(UserApp.class, resource.getContent().getId()));
         return new ResponseEntity<>(resource, HttpStatus.CREATED);
     }
 
@@ -51,20 +51,20 @@ public class UserController {
      * @return list of all users.
      */
     @RequestMapping(method = RequestMethod.GET)
-    public ResponseEntity<List<Resource<User>>> getAllUsers() {
-        List<User> users = userService.getAllUsers();
-        return new ResponseEntity<>(getUserResources(users), HttpStatus.CREATED);
+    public ResponseEntity<List<Resource<UserApp>>> getAllUsers() {
+        List<UserApp> userApps = userService.getAllUsers();
+        return new ResponseEntity<>(getUserResources(userApps), HttpStatus.CREATED);
     }
 
-    private Resource<User> getUserResource(User user) {
-        Resource<User> resource = new Resource<>(userService.createUser(user));
-        resource.add(entityLinks.linkToSingleResource(User.class, resource.getContent().getId()));
+    private Resource<UserApp> getUserResource(UserApp userApp) {
+        Resource<UserApp> resource = new Resource<>(userService.createUser(userApp));
+        resource.add(entityLinks.linkToSingleResource(UserApp.class, resource.getContent().getId()));
 
         return resource;
     }
 
-    private List<Resource<User>> getUserResources(List<User> users) {
+    private List<Resource<UserApp>> getUserResources(List<UserApp> userApps) {
 
-        return users.stream().map(this::getUserResource).collect(Collectors.toList());
+        return userApps.stream().map(this::getUserResource).collect(Collectors.toList());
     }
 }
