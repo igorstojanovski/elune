@@ -3,18 +3,21 @@ package org.programirame.controller;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
-import org.programirame.models.UserApp;
+import org.programirame.models.User;
 import org.programirame.services.UserService;
 import org.springframework.hateoas.EntityLinks;
 import org.springframework.hateoas.Link;
+import org.springframework.hateoas.Resource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import java.util.ArrayList;
+import java.util.List;
 
-public class UserAppControllerTest {
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.*;
+
+public class UserControllerTest {
 
     private static final long NEW_USER_ID = 1L;
     private static final String NEW_RESOURCE_URL = "http://localhost/api/user/1";
@@ -22,35 +25,60 @@ public class UserAppControllerTest {
     private EntityLinks entityLinks;
     private UserController userController;
 
-    private UserApp userAppRequested;
-    private UserApp userAppCreated;
+    private User userRequested;
+    private User userCreated;
 
     @Before
     public void init() {
 
-        userAppRequested = new UserApp("igor", "stojanovski", "igorce", "igorce");
-        userAppCreated = new UserApp("igor", "stojanovski", "igorce", "igorce");
-        userAppCreated.setId(1L);
+        userRequested = new User("igor", "stojanovski", "igorce", "igorce");
+        userCreated = new User("igor", "stojanovski", "igorce", "igorce");
+        userCreated.setId(1L);
 
         userService = mock(UserService.class);
         entityLinks = mock(EntityLinks.class);
 
         userController = new UserController(userService, entityLinks);
-        when(entityLinks.linkToSingleResource(UserApp.class, NEW_USER_ID)).thenReturn(new Link(NEW_RESOURCE_URL));
+        when(entityLinks.linkToSingleResource(User.class, NEW_USER_ID)).thenReturn(new Link(NEW_RESOURCE_URL));
 
-        when(userService.createUser(userAppRequested)).thenReturn(userAppCreated);
+        List<User> list = new ArrayList<>();
+        list.add(userCreated);
+
+        when(userService.getAllUsers()).thenReturn(list);
+        when(userService.createUser(userRequested)).thenReturn(userCreated);
     }
 
     @Test
     public void shouldCallUserServiceCreateMethod() {
-        userController.registerNewUser(userAppRequested);
-        Mockito.verify(userService).createUser(userAppRequested);
+        userController.registerNewUser(userRequested);
+        Mockito.verify(userService).createUser(userRequested);
     }
 
     @Test
     public void shouldReturn201WhenUserIsCreated() {
-        ResponseEntity response = userController.registerNewUser(userAppRequested);
+        ResponseEntity response = userController.registerNewUser(userRequested);
 
         assertEquals(response.getStatusCodeValue(), HttpStatus.CREATED.value());
+    }
+
+    @Test
+    public void shouldCallUserServiceToGetAllUsers() {
+        userController.getAllUsers();
+
+        verify(userService, times(1)).getAllUsers();
+    }
+
+    @Test
+    public void shouldReturnOKWhenUserFound() {
+        ResponseEntity<List<Resource<User>>> usersResponse = userController.getAllUsers();
+
+        assertEquals(usersResponse.getStatusCodeValue(), HttpStatus.OK.value());
+    }
+
+    @Test
+    public void shouldReturnTheCorrectUser() {
+        ResponseEntity<List<Resource<User>>> usersResponse = userController.getAllUsers();
+
+        assertEquals(usersResponse.getBody().get(0).getContent().getId(), 1);
     }
 }
