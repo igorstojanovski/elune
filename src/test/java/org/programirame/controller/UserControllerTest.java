@@ -7,12 +7,15 @@ import org.programirame.models.User;
 import org.programirame.services.UserService;
 import org.springframework.hateoas.EntityLinks;
 import org.springframework.hateoas.Link;
+import org.springframework.hateoas.Resource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 public class UserControllerTest {
 
@@ -38,6 +41,10 @@ public class UserControllerTest {
         userController = new UserController(userService, entityLinks);
         when(entityLinks.linkToSingleResource(User.class, NEW_USER_ID)).thenReturn(new Link(NEW_RESOURCE_URL));
 
+        List<User> list = new ArrayList<>();
+        list.add(userCreated);
+
+        when(userService.getAllUsers()).thenReturn(list);
         when(userService.createUser(userRequested)).thenReturn(userCreated);
     }
 
@@ -52,5 +59,26 @@ public class UserControllerTest {
         ResponseEntity response = userController.registerNewUser(userRequested);
 
         assertEquals(response.getStatusCodeValue(), HttpStatus.CREATED.value());
+    }
+
+    @Test
+    public void shouldCallUserServiceToGetAllUsers() {
+        userController.getAllUsers();
+
+        verify(userService, times(1)).getAllUsers();
+    }
+
+    @Test
+    public void shouldReturnOKWhenUserFound() {
+        ResponseEntity<List<Resource<User>>> usersResponse = userController.getAllUsers();
+
+        assertEquals(usersResponse.getStatusCodeValue(), HttpStatus.OK.value());
+    }
+
+    @Test
+    public void shouldReturnTheCorrectUser() {
+        ResponseEntity<List<Resource<User>>> usersResponse = userController.getAllUsers();
+
+        assertEquals(usersResponse.getBody().get(0).getContent().getId(), 1);
     }
 }

@@ -53,11 +53,13 @@ public class UserController {
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<List<Resource<User>>> getAllUsers() {
         List<User> users = userService.getAllUsers();
-        return new ResponseEntity<>(getUserResources(users), HttpStatus.CREATED);
+        return new ResponseEntity<>(getUserResources(users),
+                users.size() > 0 ? HttpStatus.OK : HttpStatus.NOT_FOUND
+        );
     }
 
     private Resource<User> getUserResource(User user) {
-        Resource<User> resource = new Resource<>(userService.createUser(user));
+        Resource<User> resource = new Resource<>(user);
         resource.add(entityLinks.linkToSingleResource(User.class, resource.getContent().getId()));
 
         return resource;
