@@ -11,6 +11,10 @@ script:
 - mvn clean test-compile failsafe:integration-test -Dspring.profiles.active=dev
 after_success:
   - pwd
-  - cd target/site/jacoco/
+  - cd target
+  - ls
+  - cd site
+  - ls
+  - cd jacoco
   - ls
   - ~/jpm/bin/codacy-coverage-reporter -l Java -r target/site/jacoco/jacoco.xml
