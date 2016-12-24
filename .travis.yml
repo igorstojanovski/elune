@@ -7,8 +7,7 @@ before_install:
   - ~/jpm/bin/jpm install com.codacy:codacy-coverage-reporter:assembly
   - ~/jpm/bin/codacy-coverage-reporter --help
 script:
-- mvn install -DskipITs -Dspring.profiles.active=dev
-- mvn clean test-compile failsafe:integration-test -Dspring.profiles.active=dev
+- mvn clean install -Dspring.profiles.active=dev
 after_success:
   - pwd
   - cd target
