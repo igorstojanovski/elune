@@ -5,15 +5,7 @@ before_install:
   - curl -sL https://github.com/jpm4j/jpm4j.installers/raw/master/dist/biz.aQute.jpm.run.jar >jpm4j.jar
   - java -jar jpm4j.jar -u init
   - ~/jpm/bin/jpm install com.codacy:codacy-coverage-reporter:assembly
-  - ~/jpm/bin/codacy-coverage-reporter --help
 script:
-- mvn clean install -Dspring.profiles.active=dev
+  - mvn clean install -Dspring.profiles.active=dev
 after_success:
-  - pwd
-  - cd target
-  - ls
-  - cd site
-  - ls
-  - cd jacoco
-  - ls
   - ~/jpm/bin/codacy-coverage-reporter -l Java -r target/site/jacoco/jacoco.xml
