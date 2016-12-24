@@ -13,14 +13,13 @@ import static org.mockito.Mockito.when;
 
 public class OrganizationsServiceTest {
 
-    private OrganizationRepository organizationRepository;
     private Organization organizationCreated;
     private Organization organization;
     private OrganizationService organizationService;
 
     @Before
     public void init() {
-        organizationRepository = mock(OrganizationRepository.class);
+        OrganizationRepository organizationRepository = mock(OrganizationRepository.class);
 
         organizationService = new OrganizationService(organizationRepository);
 
