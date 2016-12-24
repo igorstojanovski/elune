@@ -26,13 +26,12 @@ public class UserControllerTest {
     private UserController userController;
 
     private User userRequested;
-    private User userCreated;
 
     @Before
     public void init() {
 
         userRequested = new User("igor", "stojanovski", "igorce", "igorce");
-        userCreated = new User("igor", "stojanovski", "igorce", "igorce");
+        User userCreated = new User("igor", "stojanovski", "igorce", "igorce");
         userCreated.setId(1L);
 
         userService = mock(UserService.class);
