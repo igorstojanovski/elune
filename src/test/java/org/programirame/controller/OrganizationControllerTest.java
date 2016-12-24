@@ -3,8 +3,6 @@ package org.programirame.controller;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.programirame.controller.organizations.OrganizationController;
 import org.programirame.models.Organization;
 import org.programirame.models.User;
@@ -22,7 +20,6 @@ public class OrganizationControllerTest {
     private static final String NEW_RESOURCE_URL = "http://localhost/api/organization/1";
 
     private OrganizationService organizationService;
-    private EntityLinks entityLinks;
     private OrganizationController organizationController;
     private Organization organization;
     private Organization organizationCreated;
@@ -31,7 +28,7 @@ public class OrganizationControllerTest {
     public void init() {
 
         organizationService = mock(OrganizationService.class);
-        entityLinks = mock(EntityLinks.class);
+        EntityLinks entityLinks = mock(EntityLinks.class);
 
         organizationController = new OrganizationController(organizationService, entityLinks);
 
