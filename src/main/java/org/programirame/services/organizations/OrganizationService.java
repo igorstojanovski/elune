@@ -12,8 +12,12 @@ import org.springframework.stereotype.Service;
 @Service
 public class OrganizationService {
 
-    @Autowired
     private OrganizationRepository organizationRepository;
+
+    @Autowired
+    public OrganizationService(OrganizationRepository organizationRepository) {
+        this.organizationRepository = organizationRepository;
+    }
 
     public Organization createOrganization(Organization organization) {
         return organizationRepository.save(organization);

@@ -11,7 +11,7 @@ public class Organization {
 
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
-    private UserApp owner;
+    private User owner;
 
     private String name;
 
@@ -23,11 +23,11 @@ public class Organization {
         this.id = id;
     }
 
-    public UserApp getOwner() {
+    public User getOwner() {
         return owner;
     }
 
-    public void setOwner(UserApp owner) {
+    public void setOwner(User owner) {
         this.owner = owner;
     }
 
