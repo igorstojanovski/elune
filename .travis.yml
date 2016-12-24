@@ -9,4 +9,4 @@ script:
 - mvn install -DskipITs -Dspring.profiles.active=dev
 - mvn clean test-compile failsafe:integration-test -Dspring.profiles.active=dev
 after_success:
-  - ~/jpm/bin/codacy-coverage-reporter -l Java -l Java -r target/site/jacoco/jacoco.xml
+  - ~/jpm/bin/codacy-coverage-reporter -l Java -r target/site/jacoco/jacoco.xml
