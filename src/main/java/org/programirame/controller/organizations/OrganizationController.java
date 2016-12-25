@@ -1,6 +1,7 @@
 package org.programirame.controller.organizations;
 
 import org.programirame.models.Organization;
+import org.programirame.models.contact.PhoneContact;
 import org.programirame.services.organizations.OrganizationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.EntityLinks;
@@ -51,6 +52,24 @@ public class OrganizationController {
         Organization organization = organizationService.findOrganization(organizationId);
 
         return new ResponseEntity<>(createOganizationResource(organization), HttpStatus.FOUND);
+    }
+
+    @RequestMapping(path = "/{organizationId}/phone", method = RequestMethod.POST)
+    public ResponseEntity<PhoneContact> addPhoneContact(@PathVariable Long organizationId,
+                                                        @RequestBody PhoneContact phoneContact) {
+
+        if (setOrganization(organizationId, phoneContact)) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
+        PhoneContact result = organizationService.addPhoneContact(phoneContact);
+
+        return new ResponseEntity<>(result, HttpStatus.CREATED);
+    }
+
+    private boolean setOrganization(@PathVariable Long organizationId, @RequestBody PhoneContact phoneContact) {
+        Organization organization = organizationService.findOrganization(organizationId);
+        phoneContact.setOrganization(organization);
+
+        return organization == null;
     }
 
     private Resource<Organization> createOganizationResource(Organization organization) {

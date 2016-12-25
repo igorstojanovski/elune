@@ -22,7 +22,6 @@ public class UserControllerTest {
     private static final long NEW_USER_ID = 1L;
     private static final String NEW_RESOURCE_URL = "http://localhost/api/user/1";
     private UserService userService;
-    private EntityLinks entityLinks;
     private UserController userController;
 
     private User userRequested;
@@ -35,7 +34,7 @@ public class UserControllerTest {
         userCreated.setId(1L);
 
         userService = mock(UserService.class);
-        entityLinks = mock(EntityLinks.class);
+        EntityLinks entityLinks = mock(EntityLinks.class);
 
         userController = new UserController(userService, entityLinks);
         when(entityLinks.linkToSingleResource(User.class, NEW_USER_ID)).thenReturn(new Link(NEW_RESOURCE_URL));
