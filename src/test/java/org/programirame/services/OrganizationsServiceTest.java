@@ -5,6 +5,7 @@ import org.junit.Test;
 import org.programirame.models.Organization;
 import org.programirame.models.User;
 import org.programirame.repositories.OrganizationRepository;
+import org.programirame.repositories.PhoneContactRepository;
 import org.programirame.services.organizations.OrganizationService;
 
 import static org.junit.Assert.assertEquals;
@@ -17,11 +18,12 @@ public class OrganizationsServiceTest {
     private Organization organization;
     private OrganizationService organizationService;
 
+
     @Before
     public void init() {
         OrganizationRepository organizationRepository = mock(OrganizationRepository.class);
-
-        organizationService = new OrganizationService(organizationRepository);
+        PhoneContactRepository phoneContactRepository = mock(PhoneContactRepository.class);
+        organizationService = new OrganizationService(organizationRepository, phoneContactRepository);
 
         User owner = new User("Owner", "One", "owner", "***");
         owner.setId(1L);
