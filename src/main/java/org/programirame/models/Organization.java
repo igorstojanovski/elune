@@ -1,6 +1,9 @@
 package org.programirame.models;
 
+import org.programirame.models.contact.PhoneContact;
+
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 public class Organization {
@@ -14,6 +17,9 @@ public class Organization {
     private User owner;
 
     private String name;
+
+    @OneToMany(mappedBy = "organization")
+    private List<PhoneContact> phoneContacts;
 
     public long getId() {
         return id;
@@ -37,5 +43,13 @@ public class Organization {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public List<PhoneContact> getPhoneContacts() {
+        return phoneContacts;
+    }
+
+    public void setPhoneContacts(List<PhoneContact> phoneContacts) {
+        this.phoneContacts = phoneContacts;
     }
 }
