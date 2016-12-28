@@ -5,10 +5,6 @@ import org.programirame.repositories.EventRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
-import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
-
 /**
  * Service for {@link Event} related actions.
  */
@@ -18,28 +14,22 @@ public class EventService {
     public static final String YYYY_MM_DD = "yyyy-MM-dd";
     public static final String HH_MM = "HH:mm";
     private final EventRepository eventRepository;
+    private final DateTimeService dateTimeService;
 
     @Autowired
-    public EventService(EventRepository eventRepository) {
+    public EventService(EventRepository eventRepository, DateTimeService dateTimeService) {
         this.eventRepository = eventRepository;
+        this.dateTimeService = dateTimeService;
     }
 
     public Event createEvent(Event event) {
-        event.setFromDate(getLocalDateTime(event.getDateFrom(), event.getTimeFrom()));
-        event.setToDate(getLocalDateTime(event.getDateTo(), event.getTimeTo()));
+        event.setFromDate(
+                dateTimeService.getLocalDateTime(event.getDateFrom(), event.getTimeFrom())
+        );
+        event.setToDate(
+                dateTimeService.getLocalDateTime(event.getDateTo(), event.getTimeTo())
+        );
         return eventRepository.save(event);
-    }
-
-    /**
-     * @param date format '2016-02-14'
-     * @param time format '18:32'
-     * @return
-     */
-    private LocalDateTime getLocalDateTime(String date, String time) {
-        String iso8061 = date + "T" + time + ":00+01:00";
-        ZonedDateTime zdt = ZonedDateTime.parse(iso8061);
-
-        return zdt.toLocalDateTime();
     }
 
     /**
@@ -51,24 +41,20 @@ public class EventService {
     public Event getEvent(Long eventId) {
         Event event = eventRepository.findOne(eventId);
 
-        event.setDateFrom(formatLocalDateTime(event.getFromDate(), YYYY_MM_DD));
-        event.setTimeFrom(formatLocalDateTime(event.getFromDate(), HH_MM));
+        event.setDateFrom(
+                dateTimeService.formatLocalDateTime(event.getFromDate(), YYYY_MM_DD)
+        );
+        event.setTimeFrom(
+                dateTimeService.formatLocalDateTime(event.getFromDate(), HH_MM)
+        );
 
-        event.setDateTo(formatLocalDateTime(event.getToDate(), YYYY_MM_DD));
-        event.setTimeTo(formatLocalDateTime(event.getToDate(), HH_MM));
+        event.setDateTo(
+                dateTimeService.formatLocalDateTime(event.getToDate(), YYYY_MM_DD)
+        );
+        event.setTimeTo(
+                dateTimeService.formatLocalDateTime(event.getToDate(), HH_MM)
+        );
 
         return event;
-    }
-
-    /**
-     * Formats a {@link LocalDateTime} object into the given format.
-     *
-     * @param fromDate The {@link LocalDateTime} to format.
-     * @param format   The format.
-     * @return The formated date and/or time.
-     */
-    private String formatLocalDateTime(LocalDateTime fromDate, String format) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(format);
-        return fromDate.format(formatter);
     }
 }
