@@ -20,10 +20,12 @@ public class InvalidIntervalsValidationTest extends IntervalValidationTest {
     // "10:00 - 12:00"
     @Parameterized.Parameters
     public static Collection invalidIntervalValues() {
-        return Arrays.asList({"2017-02-27", "09:00", "2017-02-27", "11:00"},
+        return Arrays.asList(new String[][]{
+                {"2017-02-27", "09:00", "2017-02-27", "11:00"},
                 {"2017-02-27", "11:00", "2017-02-27", "13:00"},
                 {"2017-02-27", "09:00", "2017-02-27", "14:00"},
-                {"2017-02-27", "10:30", "2017-02-27", "11:30"});
+                {"2017-02-27", "10:30", "2017-02-27", "11:30"}
+        });
     }
 
     @Before

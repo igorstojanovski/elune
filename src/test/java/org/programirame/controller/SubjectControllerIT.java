@@ -45,5 +45,4 @@ public class SubjectControllerIT {
         assertEquals(rootNode.get("id").asLong(), 1L);
     }
 
-
 }
