@@ -14,10 +14,8 @@ public class Timetable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @ElementCollection(fetch = FetchType.EAGER)
-    @CollectionTable(name = "DAILY_HOURS")
-    @MapKeyColumn(name = "DAY_OF_WEEK")
-    @Column(name = "VALUE")
+    @OneToMany(cascade = CascadeType.ALL)
+    @MapKeyColumn(name = "daily_hours")
     private Map<DayOfWeek, HourInterval> dailyHours = new HashMap<>();
 
     public Long getId() {
