@@ -26,12 +26,13 @@ public class EventServiceTest {
     private SubjectService subjectService;
     private EventService eventService;
     private Event eventWithId;
+    private EventRepository eventRepository;
 
     @Before
     public void setUp() {
 
         DateTimeService dateTimeService = new DateTimeService();
-        EventRepository eventRepository = mock(EventRepository.class);
+        eventRepository = mock(EventRepository.class);
         subjectService = mock(SubjectService.class);
 
         eventService = new EventService(eventRepository, dateTimeService, subjectService);
@@ -95,6 +96,8 @@ public class EventServiceTest {
         Event eventOutOfBounds = getEventWithoutId("2017-02-27", "08:10", "2017-02-27", "09:00");
         eventOutOfBounds.setSubject(getSetupSubject());
         doReturn(getSetupSubject()).when(subjectService).getSubject(1L);
+        doReturn(eventOutOfBounds).when(eventRepository).save(eventOutOfBounds);
+
         Event createdEvent = eventService.createEvent(eventOutOfBounds);
 
         assertNotNull(createdEvent);
