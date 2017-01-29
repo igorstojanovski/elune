@@ -1,6 +1,8 @@
 package org.programirame.controller;
 
 
+import org.programirame.exceptions.EventOutOfBoundsException;
+import org.programirame.exceptions.InvalidDataException;
 import org.programirame.models.Event;
 import org.programirame.services.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +33,8 @@ public class EventController {
      * @return The created event.
      */
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<Event> createEvent(@RequestBody Event event) {
+    public ResponseEntity<Event> createEvent(@RequestBody Event event) throws InvalidDataException,
+            EventOutOfBoundsException {
 
         Event result = eventService.createEvent(event);
 

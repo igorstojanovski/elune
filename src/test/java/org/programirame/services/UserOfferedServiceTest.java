@@ -14,7 +14,7 @@ import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class UserServiceTest {
+public class UserOfferedServiceTest {
 
     private UserRepository userRepository;
     private UserService userService;

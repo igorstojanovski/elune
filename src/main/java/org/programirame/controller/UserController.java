@@ -46,7 +46,7 @@ public class UserController {
     }
 
     /**
-     * Service for retrieving all the users.
+     * OfferedService for retrieving all the users.
      *
      * @return list of all users.
      */

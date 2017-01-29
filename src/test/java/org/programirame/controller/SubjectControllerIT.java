@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.programirame.models.User;
+import org.programirame.models.Subject;
 import org.programirame.utilities.TestUtilities;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -21,21 +21,19 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
-public class UserControllerIT {
+public class SubjectControllerIT {
 
     @Autowired
     private MockMvc mockMvc;
-    private User userRequested;
-
-
+    private Subject subject;
 
     @Test
     public void shouldCreateNewUser() throws Exception {
 
-        userRequested = new User("igor", "stojanovski", "igorce", "igorce");
+        subject = new Subject();
 
-        MvcResult result = mockMvc.perform(post("/api/user")
-                .content(TestUtilities.asJsonString(userRequested))
+        MvcResult result = mockMvc.perform(post("/api/subject")
+                .content(TestUtilities.asJsonString(subject))
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().is(201))
@@ -46,4 +44,6 @@ public class UserControllerIT {
 
         assertEquals(rootNode.get("id").asLong(), 1L);
     }
+
+
 }
