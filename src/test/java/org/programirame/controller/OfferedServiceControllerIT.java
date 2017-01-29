@@ -14,7 +14,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -44,6 +44,8 @@ public class OfferedServiceControllerIT {
         ObjectMapper mapper = new ObjectMapper();
         JsonNode rootNode = mapper.readTree(result.getResponse().getContentAsString());
 
-        assertEquals(rootNode.get("id").asLong(), 1L);
+        assertTrue(rootNode.get("id").asLong() > 0L);
     }
+
+
 }
