@@ -25,12 +25,11 @@ public class OfferedServiceControllerIT {
 
     @Autowired
     private MockMvc mockMvc;
-    private OfferedService offeredServiceRequested;
 
     @Test
     public void shouldCreateNewUser() throws Exception {
 
-        offeredServiceRequested = new OfferedService();
+        OfferedService offeredServiceRequested = new OfferedService();
         offeredServiceRequested.setName("Consultation");
         offeredServiceRequested.setDescription("Consultation with a doctor.");
 

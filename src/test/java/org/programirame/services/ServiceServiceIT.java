@@ -18,7 +18,7 @@ import static org.junit.Assert.assertNotNull;
 public class ServiceServiceIT {
 
     @Autowired
-    OfferedServiceRepository offeredServiceRepository;
+    private OfferedServiceRepository offeredServiceRepository;
     private OfferedServiceService offeredServiceService;
 
     @Before

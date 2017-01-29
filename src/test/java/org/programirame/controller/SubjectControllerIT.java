@@ -25,12 +25,11 @@ public class SubjectControllerIT {
 
     @Autowired
     private MockMvc mockMvc;
-    private Subject subject;
 
     @Test
     public void shouldCreateNewUser() throws Exception {
 
-        subject = new Subject();
+        Subject subject = new Subject();
 
         MvcResult result = mockMvc.perform(post("/api/subject")
                 .content(TestUtilities.asJsonString(subject))

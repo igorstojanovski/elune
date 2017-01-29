@@ -16,29 +16,26 @@ import java.time.DayOfWeek;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
 
 public class EventServiceTest {
 
-    private DateTimeService dateTimeService;
-    private EventRepository eventRepository;
     private SubjectService subjectService;
     private EventService eventService;
-    private Event eventWithoutId;
     private Event eventWithId;
-    private Subject subjectWithId;
 
     @Before
     public void setUp() {
 
-        dateTimeService = new DateTimeService();
-        eventRepository = mock(EventRepository.class);
+        DateTimeService dateTimeService = new DateTimeService();
+        EventRepository eventRepository = mock(EventRepository.class);
         subjectService = mock(SubjectService.class);
 
         eventService = new EventService(eventRepository, dateTimeService, subjectService);
-        eventWithoutId = getEventWithoutId("2017-02-27", "08:00", "2017-02-27", "09:00");
+        Event eventWithoutId = getEventWithoutId("2017-02-27", "08:00", "2017-02-27", "09:00");
         eventWithId = getEventWithoutId("2017-02-27", "07:00", "2017-02-27", "09:00");
         eventWithId.setId(1L);
 
@@ -55,7 +52,7 @@ public class EventServiceTest {
     }
 
     private void setUpSubjectService() {
-        subjectWithId = new Subject();
+        Subject subjectWithId = new Subject();
         subjectWithId.setId(1L);
 
         doReturn(subjectWithId).when(subjectService).getSubject(1L);
@@ -98,18 +95,10 @@ public class EventServiceTest {
         Event eventOutOfBounds = getEventWithoutId("2017-02-27", "08:10", "2017-02-27", "09:00");
         eventOutOfBounds.setSubject(getSetupSubject());
         doReturn(getSetupSubject()).when(subjectService).getSubject(1L);
-        eventService.createEvent(eventOutOfBounds);
-    }
+        Event createdEvent = eventService.createEvent(eventOutOfBounds);
 
-    @Test
-    public void shouldNotCreateEventIfItOverlapsWithOtherEvents() throws InvalidDataException,
-            EventOutOfBoundsException {
-        Event eventOutOfBounds = getEventWithoutId("2017-02-27", "08:10", "2017-02-27", "09:00");
-        eventOutOfBounds.setSubject(getSetupSubject());
-        doReturn(getSetupSubject()).when(subjectService).getSubject(1L);
-        eventService.createEvent(eventOutOfBounds);
+        assertNotNull(createdEvent);
     }
-
 
     private Event getEventWithoutId(String dateFrom, String timeFrom, String dateTo, String timeTo) {
         Event event = new Event();

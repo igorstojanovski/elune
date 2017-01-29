@@ -5,12 +5,12 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.programirame.exceptions.EventOutOfBoundsException;
-import org.programirame.models.*;
+import org.programirame.models.Event;
 
 import java.util.Arrays;
 import java.util.Collection;
 
-import static org.mockito.Mockito.mock;
+import static org.junit.Assert.assertNull;
 
 @RunWith(Parameterized.class)
 public class ValidIntervalsValidationTest extends IntervalValidationTest {
@@ -37,10 +37,17 @@ public class ValidIntervalsValidationTest extends IntervalValidationTest {
     }
 
     @Test
-    public void shouldThrowExceptionWhenTheIntervalIsInvalid() throws EventOutOfBoundsException {
+    public void shouldThrowExceptionWhenTheIntervalIsInvalid() {
+        EventOutOfBoundsException expected = null;
 
         Event testEvent = getEvent(dateFrom, timeFrom, dateTo, timeTo);
-        eventService.validateEventInterval(testEvent, subject);
+        try {
+            eventService.validateEventInterval(testEvent, subject);
+        } catch (EventOutOfBoundsException e) {
+            expected = e;
+        }
+
+        assertNull(expected);
     }
 
 }

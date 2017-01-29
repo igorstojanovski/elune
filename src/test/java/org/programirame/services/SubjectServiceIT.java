@@ -20,7 +20,7 @@ import static org.junit.Assert.assertNotNull;
 public class SubjectServiceIT {
 
     @Autowired
-    SubjectRepository subjectRepository;
+    private SubjectRepository subjectRepository;
     private SubjectService subjectService;
 
     @Before

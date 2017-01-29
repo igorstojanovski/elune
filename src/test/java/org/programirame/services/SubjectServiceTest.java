@@ -12,19 +12,17 @@ import static org.mockito.Mockito.when;
 
 public class SubjectServiceTest {
 
-    private SubjectRepository subjectRepository;
     private SubjectService subjectService;
     private Subject subject;
-    private Subject createdSubject;
 
     @Before
     public void setUp() {
-        subjectRepository = mock(SubjectRepository.class);
+        SubjectRepository subjectRepository = mock(SubjectRepository.class);
 
         subjectService = new SubjectService(subjectRepository);
 
         subject = getSubject();
-        createdSubject = getSubject();
+        Subject createdSubject = getSubject();
         createdSubject.setId(1L);
 
         when(subjectRepository.save(subject)).thenReturn(createdSubject);
