@@ -12,7 +12,7 @@ import java.util.Collection;
 import static org.junit.Assert.*;
 
 @RunWith(Parameterized.class)
-public class DateTimeServiceTest {
+public class DateTimeOfferedServiceTest {
 
     public static final String CURRENTLY_ONLY_ALLOWED_DATE_FORMAT = "yyyy-MM-dd";
     public static final String CURRENTLY_ONLY_ALLOWED_TIME_FORMAT = "HH:mm";
@@ -20,7 +20,7 @@ public class DateTimeServiceTest {
     private final String time;
     private DateTimeService dateTimeService;
 
-    public DateTimeServiceTest(String date, String time) {
+    public DateTimeOfferedServiceTest(String date, String time) {
         this.date = date;
         this.time = time;
     }

@@ -14,6 +14,14 @@ public class Event {
     private Long id;
 
     @ManyToOne
+    @JoinColumn(name = "service_id")
+    private OfferedService offeredService;
+
+    @ManyToOne
+    @JoinColumn(name = "resource_id")
+    private Subject subject;
+
+    @ManyToOne
     @JoinColumn(name = "organization_id")
     private Organization organization;
 
@@ -107,4 +115,21 @@ public class Event {
     public void setTimeTo(String timeTo) {
         this.timeTo = timeTo;
     }
+
+    public OfferedService getOfferedService() {
+        return offeredService;
+    }
+
+    public void setOfferedService(OfferedService offeredService) {
+        this.offeredService = offeredService;
+    }
+
+    public Subject getSubject() {
+        return subject;
+    }
+
+    public void setSubject(Subject subject) {
+        this.subject = subject;
+    }
+
 }
