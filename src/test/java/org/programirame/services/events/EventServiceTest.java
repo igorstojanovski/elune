@@ -13,7 +13,6 @@ import org.programirame.services.EventService;
 import org.programirame.services.SubjectService;
 
 import java.time.DayOfWeek;
-import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
