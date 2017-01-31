@@ -36,7 +36,7 @@ public class UserControllerTest {
         userService = mock(UserService.class);
         EntityLinks entityLinks = mock(EntityLinks.class);
 
-        userController = new UserController(userService, entityLinks);
+        userController = new UserController(userService);
         when(entityLinks.linkToSingleResource(User.class, NEW_USER_ID)).thenReturn(new Link(NEW_RESOURCE_URL));
 
         List<User> list = new ArrayList<>();
@@ -75,8 +75,8 @@ public class UserControllerTest {
 
     @Test
     public void shouldReturnTheCorrectUser() {
-        ResponseEntity<List<Resource<User>>> usersResponse = userController.getAllUsers();
+        ResponseEntity<List<User>> usersResponse = userController.getAllUsers();
 
-        assertEquals(usersResponse.getBody().get(0).getContent().getId(), 1);
+        assertEquals(usersResponse.getBody().get(0).getId(), 1);
     }
 }

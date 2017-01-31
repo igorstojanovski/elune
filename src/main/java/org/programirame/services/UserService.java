@@ -41,4 +41,14 @@ public class UserService {
 
         return users;
     }
+
+    /**
+     * Retrieves a single user from the database.
+     *
+     * @param userID the ID of the user to retrieve.
+     * @return the {@link User}
+     */
+    public User getUser(Long userID) {
+        return userRepository.findOne(userID);
+    }
 }

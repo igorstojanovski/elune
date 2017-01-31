@@ -17,8 +17,6 @@ import static org.mockito.Mockito.*;
 
 public class OrganizationControllerTest {
 
-    private static final String NEW_RESOURCE_URL = "http://localhost/api/organization/1";
-
     private OrganizationService organizationService;
     private OrganizationController organizationController;
     private Organization organization;
@@ -28,9 +26,8 @@ public class OrganizationControllerTest {
     public void init() {
 
         organizationService = mock(OrganizationService.class);
-        EntityLinks entityLinks = mock(EntityLinks.class);
 
-        organizationController = new OrganizationController(organizationService, entityLinks);
+        organizationController = new OrganizationController(organizationService);
 
         User owner = new User("Owner", "One", "owner", "***");
         owner.setId(1L);
@@ -45,15 +42,14 @@ public class OrganizationControllerTest {
         organizationCreated.setId(1L);
 
         when(organizationService.createOrganization(organization)).thenReturn(organizationCreated);
-        when(entityLinks.linkToSingleResource(Organization.class, 1L)).thenReturn(new Link(NEW_RESOURCE_URL));
     }
 
 
     @Test
     public void shouldReturnNonNullResultFromOrganizationService() {
-        ResponseEntity<Resource<Organization>> result = organizationController.creatOrganization(organization);
+        ResponseEntity<Organization> result = organizationController.creatOrganization(organization);
 
         verify(organizationService, times(1)).createOrganization(organization);
-        assertEquals(result.getBody().getContent(), organizationCreated);
+        assertEquals(result.getBody(), organizationCreated);
     }
 }

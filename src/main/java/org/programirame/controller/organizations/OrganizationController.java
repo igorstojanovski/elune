@@ -6,7 +6,6 @@ import org.programirame.services.organizations.OrganizationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.EntityLinks;
 import org.springframework.hateoas.ExposesResourceFor;
-import org.springframework.hateoas.Resource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,15 +15,12 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @RequestMapping("/api/organization")
-@ExposesResourceFor(Organization.class)
 public class OrganizationController {
 
-    private final EntityLinks entityLinks;
     private OrganizationService organizationService;
 
     @Autowired
-    public OrganizationController(OrganizationService organizationService, EntityLinks entityLinks) {
-        this.entityLinks = entityLinks;
+    public OrganizationController(OrganizationService organizationService) {
         this.organizationService = organizationService;
     }
 
@@ -35,9 +31,9 @@ public class OrganizationController {
      * @return The created organization.
      */
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<Resource<Organization>> creatOrganization(@RequestBody Organization organization) {
+    public ResponseEntity creatOrganization(@RequestBody Organization organization) {
         Organization createdOrganization = organizationService.createOrganization(organization);
-        return new ResponseEntity<>(createOganizationResource(createdOrganization), HttpStatus.CREATED);
+        return new ResponseEntity<>(createdOrganization, HttpStatus.CREATED);
     }
 
     /**
@@ -47,11 +43,11 @@ public class OrganizationController {
      * @return The found organization or null.
      */
     @RequestMapping(path = "/{organizationId}", method = RequestMethod.GET)
-    public ResponseEntity<Resource<Organization>> getOrganization(@PathVariable Long organizationId) {
+    public ResponseEntity getOrganization(@PathVariable Long organizationId) {
 
         Organization organization = organizationService.findOrganization(organizationId);
 
-        return new ResponseEntity<>(createOganizationResource(organization), HttpStatus.FOUND);
+        return new ResponseEntity<>(organization, HttpStatus.FOUND);
     }
 
     @RequestMapping(path = "/{organizationId}/phone", method = RequestMethod.POST)
@@ -70,12 +66,5 @@ public class OrganizationController {
         phoneContact.setOrganization(organization);
 
         return organization == null;
-    }
-
-    private Resource<Organization> createOganizationResource(Organization organization) {
-        Resource<Organization> resource = new Resource<>(organization);
-        resource.add(entityLinks.linkToSingleResource(Organization.class, resource.getContent().getId()));
-
-        return resource;
     }
 }
