@@ -2,6 +2,7 @@ package org.programirame.models;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -19,6 +20,7 @@ public class Event {
 
     @ManyToOne
     @JoinColumn(name = "resource_id")
+    @JsonIgnoreProperties({"events"})
     private Subject subject;
 
     @ManyToOne
@@ -43,6 +45,9 @@ public class Event {
     private String timeFrom;
     @Transient
     private String timeTo;
+
+    @OneToOne
+    private User createdBy;
 
     public Long getId() {
         return id;
@@ -132,4 +137,11 @@ public class Event {
         this.subject = subject;
     }
 
+    public User getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(User createdBy) {
+        this.createdBy = createdBy;
+    }
 }

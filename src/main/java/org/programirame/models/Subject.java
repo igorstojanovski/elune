@@ -1,5 +1,7 @@
 package org.programirame.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,6 +18,13 @@ public class Subject {
 
     @OneToMany(mappedBy = "subject")
     private List<Event> events = new ArrayList<>();
+
+    @OneToOne
+    @JsonIgnore
+    private Organization organization;
+
+    @OneToOne
+    private User createdBy;
 
     public long getId() {
         return id;
@@ -39,5 +48,21 @@ public class Subject {
 
     public void setEvents(List<Event> events) {
         this.events = events;
+    }
+
+    public Organization getOrganization() {
+        return organization;
+    }
+
+    public void setOrganization(Organization organization) {
+        this.organization = organization;
+    }
+
+    public User getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(User createdBy) {
+        this.createdBy = createdBy;
     }
 }

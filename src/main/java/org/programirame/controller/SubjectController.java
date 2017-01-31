@@ -5,13 +5,9 @@ import org.programirame.services.SubjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.EntityLinks;
 import org.springframework.hateoas.ExposesResourceFor;
-import org.springframework.hateoas.Resource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/subject")
@@ -28,10 +24,15 @@ public class SubjectController {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity createOrganizationalResource(@RequestBody Subject subject) {
+    public ResponseEntity<Subject> createOrganizationalResource(@RequestBody Subject subject) {
 
-        Resource<Subject> resource = new Resource<>(subjectService.createResource(subject));
-        resource.add(entityLinks.linkToSingleResource(Subject.class, resource.getContent().getId()));
-        return new ResponseEntity<>(resource, HttpStatus.CREATED);
+        Subject createdSubject = subjectService.createResource(subject);
+        return new ResponseEntity<>(createdSubject, HttpStatus.CREATED);
+    }
+
+    @RequestMapping(value = "/{subjectId}", method = RequestMethod.GET)
+    public ResponseEntity<Subject> getSubject(@PathVariable Long subjectId) {
+        Subject subject = subjectService.getSubject(subjectId);
+        return new ResponseEntity<>(subject, subject != null ? HttpStatus.OK : HttpStatus.NOT_FOUND);
     }
 }
