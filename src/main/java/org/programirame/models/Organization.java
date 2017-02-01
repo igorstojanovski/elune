@@ -16,6 +16,7 @@ public class Organization {
     @JoinColumn(name = "user_id")
     private User owner;
 
+    @Column(nullable = false)
     private String name;
 
     @OneToMany(mappedBy = "organization")

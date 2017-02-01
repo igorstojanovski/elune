@@ -1,6 +1,7 @@
 package org.programirame.controller;
 
 
+import org.programirame.exceptions.InvalidDataException;
 import org.programirame.models.User;
 import org.programirame.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +29,7 @@ public class UserController {
      * @return Newly created {@link User} object.
      */
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<User> registerNewUser(@RequestBody User user) {
+    public ResponseEntity<User> registerNewUser(@RequestBody User user) throws InvalidDataException {
 
         User createdUser = userService.createUser(user);
         return new ResponseEntity<>(createdUser, HttpStatus.CREATED);

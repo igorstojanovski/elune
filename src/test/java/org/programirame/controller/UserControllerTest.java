@@ -3,6 +3,7 @@ package org.programirame.controller;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
+import org.programirame.exceptions.InvalidDataException;
 import org.programirame.models.User;
 import org.programirame.services.UserService;
 import org.springframework.hateoas.EntityLinks;
@@ -27,7 +28,7 @@ public class UserControllerTest {
     private User userRequested;
 
     @Before
-    public void init() {
+    public void init() throws InvalidDataException {
 
         userRequested = new User("igor", "stojanovski", "igorce", "igorce");
         User userCreated = new User("igor", "stojanovski", "igorce", "igorce");
@@ -43,17 +44,17 @@ public class UserControllerTest {
         list.add(userCreated);
 
         when(userService.getAllUsers()).thenReturn(list);
-        when(userService.createUser(userRequested)).thenReturn(userCreated);
+        doReturn(userCreated).when(userService).createUser(userRequested);
     }
 
     @Test
-    public void shouldCallUserServiceCreateMethod() {
+    public void shouldCallUserServiceCreateMethod() throws InvalidDataException {
         userController.registerNewUser(userRequested);
         Mockito.verify(userService).createUser(userRequested);
     }
 
     @Test
-    public void shouldReturn201WhenUserIsCreated() {
+    public void shouldReturn201WhenUserIsCreated() throws InvalidDataException {
         ResponseEntity response = userController.registerNewUser(userRequested);
 
         assertEquals(response.getStatusCodeValue(), HttpStatus.CREATED.value());

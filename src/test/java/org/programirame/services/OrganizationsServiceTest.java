@@ -2,8 +2,10 @@ package org.programirame.services;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.programirame.exceptions.InvalidDataException;
 import org.programirame.models.Organization;
 import org.programirame.models.User;
+import org.programirame.models.UserTypes;
 import org.programirame.repositories.OrganizationRepository;
 import org.programirame.repositories.PhoneContactRepository;
 import org.programirame.services.organizations.OrganizationService;
@@ -17,7 +19,7 @@ public class OrganizationsServiceTest {
     private Organization organizationCreated;
     private Organization organization;
     private OrganizationService organizationService;
-
+    private User owner;
 
     @Before
     public void init() {
@@ -25,7 +27,7 @@ public class OrganizationsServiceTest {
         PhoneContactRepository phoneContactRepository = mock(PhoneContactRepository.class);
         organizationService = new OrganizationService(organizationRepository, phoneContactRepository);
 
-        User owner = new User("Owner", "One", "owner", "***");
+        owner = new User("Owner", "One", "owner", "***");
         owner.setId(1L);
 
         organization = new Organization();
@@ -41,10 +43,32 @@ public class OrganizationsServiceTest {
     }
 
     @Test
-    public void shouldCallTheRightRepository() {
+    public void shouldCallTheRightRepository() throws InvalidDataException {
+        organization.getOwner().setUserType(UserTypes.ADMIN);
         Organization result = organizationService.createOrganization(organization);
 
         assertEquals(result, organizationCreated);
     }
 
+    @Test(expected = InvalidDataException.class)
+    public void shouldNotCreateOrganizationWithoutUser() throws InvalidDataException {
+        Organization organization = new Organization();
+        organization.setName("Code castle");
+        organizationService.createOrganization(organization);
+    }
+
+    @Test(expected = InvalidDataException.class)
+    public void shouldNotCreateOrganizationIfUserNotAdmin() throws InvalidDataException {
+        Organization organization = new Organization();
+        organization.setName("Code castle");
+        organization.setOwner(owner);
+        organizationService.createOrganization(organization);
+    }
+
+    @Test(expected = InvalidDataException.class)
+    public void shouldNotCreateOrganizationWithoutAName() throws InvalidDataException {
+        Organization organization = new Organization();
+        organization.setOwner(owner);
+        organizationService.createOrganization(organization);
+    }
 }
