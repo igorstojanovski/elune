@@ -18,6 +18,7 @@ import org.springframework.test.web.servlet.MvcResult;
 
 import java.time.DayOfWeek;
 
+import static org.junit.Assert.assertEquals;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -38,7 +39,9 @@ public class EntityCreationSmokeIT {
         User user = new User();
         user.setName("Igor");
         user.setSurname("Stojanovski");
-        user.setUserType(UserTypes.SUBSCRIBER);
+        user.setUsername("igorce");
+        user.setUserType(UserTypes.ADMIN);
+        user.setPassword("dummyPass");
 
         MvcResult result = postMvcResult(user, "/api/user");
         user = mapper.readValue(result.getResponse().getContentAsString(), User.class);
@@ -87,7 +90,8 @@ public class EntityCreationSmokeIT {
         result = getMvcResult("/api/subject/" + subject.getId(), 200);
         subject = mapper.readValue(result.getResponse().getContentAsString(), Subject.class);
 
-        System.out.println(subject.getEvents().size());
+        System.out.println("Number of elements: " + subject.getEvents().size());
+        assertEquals(subject.getEvents().size(), 1);
     }
 
     private MvcResult postMvcResult(Object object, String url) throws Exception {

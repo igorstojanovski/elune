@@ -1,5 +1,6 @@
 package org.programirame.services;
 
+import org.programirame.exceptions.InvalidDataException;
 import org.programirame.models.User;
 import org.programirame.repositories.UserRepository;
 import org.springframework.stereotype.Service;
@@ -22,7 +23,8 @@ public class UserService {
      * @param user the user to be created.
      * @return the newly created user with ID set.
      */
-    public User createUser(User user) {
+    public User createUser(User user) throws InvalidDataException {
+        validateUser(user);
         return userRepository.save(user);
     }
 
@@ -50,5 +52,22 @@ public class UserService {
      */
     public User getUser(Long userID) {
         return userRepository.findOne(userID);
+    }
+
+    public void validateUser(User user) throws InvalidDataException {
+        if (!isValidUser(user)) throw new InvalidDataException();
+    }
+
+    private boolean isValidUser(User user) {
+        boolean isValidUser = true;
+
+        if (user.getPassword() == null
+                || user.getName() == null
+                || user.getUsername() == null
+                || user.getUserType() == null) {
+            isValidUser = false;
+        }
+
+        return isValidUser;
     }
 }

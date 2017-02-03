@@ -11,10 +11,18 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
+
+    @Column(nullable = false)
     private String name;
+
     private String surname;
+
+    @Column(nullable = false)
     private String username;
+
+    @Column(nullable = false)
     private String password;
+
     private UserTypes userType = UserTypes.SUBSCRIBER;
 
     public User(String name, String surname, String username, String password) {
@@ -59,7 +67,6 @@ public class User {
         this.username = username;
     }
 
-    @JsonIgnore
     public String getPassword() {
         return password;
     }

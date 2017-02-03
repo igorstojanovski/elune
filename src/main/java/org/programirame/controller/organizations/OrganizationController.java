@@ -1,5 +1,6 @@
 package org.programirame.controller.organizations;
 
+import org.programirame.exceptions.InvalidDataException;
 import org.programirame.models.Organization;
 import org.programirame.models.contact.PhoneContact;
 import org.programirame.services.organizations.OrganizationService;
@@ -31,7 +32,7 @@ public class OrganizationController {
      * @return The created organization.
      */
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity creatOrganization(@RequestBody Organization organization) {
+    public ResponseEntity creatOrganization(@RequestBody Organization organization) throws InvalidDataException {
         Organization createdOrganization = organizationService.createOrganization(organization);
         return new ResponseEntity<>(createdOrganization, HttpStatus.CREATED);
     }

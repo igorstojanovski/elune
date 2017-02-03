@@ -4,6 +4,7 @@ package org.programirame.controller;
 import org.junit.Before;
 import org.junit.Test;
 import org.programirame.controller.organizations.OrganizationController;
+import org.programirame.exceptions.InvalidDataException;
 import org.programirame.models.Organization;
 import org.programirame.models.User;
 import org.programirame.services.organizations.OrganizationService;
@@ -23,7 +24,7 @@ public class OrganizationControllerTest {
     private Organization organizationCreated;
 
     @Before
-    public void init() {
+    public void init() throws InvalidDataException {
 
         organizationService = mock(OrganizationService.class);
 
@@ -46,7 +47,7 @@ public class OrganizationControllerTest {
 
 
     @Test
-    public void shouldReturnNonNullResultFromOrganizationService() {
+    public void shouldReturnNonNullResultFromOrganizationService() throws InvalidDataException {
         ResponseEntity<Organization> result = organizationController.creatOrganization(organization);
 
         verify(organizationService, times(1)).createOrganization(organization);
