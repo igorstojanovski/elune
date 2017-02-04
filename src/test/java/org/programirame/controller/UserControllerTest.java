@@ -2,7 +2,6 @@ package org.programirame.controller;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.Mockito;
 import org.programirame.exceptions.InvalidDataException;
 import org.programirame.models.User;
 import org.programirame.services.UserService;
@@ -17,7 +16,11 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 public class UserControllerTest {
 
