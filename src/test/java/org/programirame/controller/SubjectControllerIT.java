@@ -8,7 +8,6 @@ import org.programirame.models.Subject;
 import org.programirame.models.Timetable;
 import org.programirame.models.WholeDayEvent;
 import org.programirame.models.utility.HourInterval;
-import org.programirame.services.DateTimeService;
 import org.programirame.utilities.TestUtilities;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -31,8 +30,7 @@ public class SubjectControllerIT {
 
     private static final String START_TIME = "08:00";
     private static final String END_TIME = "17:00";
-    @Autowired
-    private DateTimeService dateTimeService;
+
     @Autowired
     private MockMvc mockMvc;
 
