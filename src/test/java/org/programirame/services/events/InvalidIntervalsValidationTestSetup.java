@@ -11,9 +11,9 @@ import java.util.Arrays;
 import java.util.Collection;
 
 @RunWith(Parameterized.class)
-public class InvalidIntervalsValidationTest extends IntervalValidationTest {
+public class InvalidIntervalsValidationTestSetup extends IntervalValidationTestSetup {
 
-    public InvalidIntervalsValidationTest(String dateFrom, String timeFrom, String dateTo, String timeTo) {
+    public InvalidIntervalsValidationTestSetup(String dateFrom, String timeFrom, String dateTo, String timeTo) {
         super(dateTo, timeFrom, dateFrom, timeTo);
     }
 

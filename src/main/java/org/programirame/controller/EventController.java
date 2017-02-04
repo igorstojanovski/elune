@@ -6,24 +6,23 @@ import org.programirame.exceptions.InvalidDataException;
 import org.programirame.models.Event;
 import org.programirame.services.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.hateoas.EntityLinks;
-import org.springframework.hateoas.ExposesResourceFor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/event")
-@ExposesResourceFor(Event.class)
 public class EventController {
 
-    private final EntityLinks entityLinks;
     private final EventService eventService;
 
     @Autowired
-    public EventController(EventService eventService, EntityLinks entityLinks) {
+    public EventController(EventService eventService) {
         this.eventService = eventService;
-        this.entityLinks = entityLinks;
     }
 
     /**

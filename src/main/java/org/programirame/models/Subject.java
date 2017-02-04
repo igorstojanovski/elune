@@ -1,6 +1,7 @@
 package org.programirame.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.springframework.data.geo.Distance;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -25,6 +26,9 @@ public class Subject {
 
     @OneToOne
     private User createdBy;
+
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<WholeDayEvent> wholeDayEvents = new ArrayList<>();
 
     public long getId() {
         return id;
@@ -64,5 +68,13 @@ public class Subject {
 
     public void setCreatedBy(User createdBy) {
         this.createdBy = createdBy;
+    }
+
+    public List<WholeDayEvent> getWholeDayEvents() {
+        return wholeDayEvents;
+    }
+
+    public void setWholeDayEvents(List<WholeDayEvent> wholeDayEvents) {
+        this.wholeDayEvents = wholeDayEvents;
     }
 }

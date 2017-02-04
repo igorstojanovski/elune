@@ -11,7 +11,7 @@ import java.time.DayOfWeek;
 
 import static org.mockito.Mockito.mock;
 
-public class IntervalValidationTest {
+public class IntervalValidationTestSetup {
     protected final String dateFrom;
     protected final String dateTo;
     protected final String timeFrom;
@@ -20,7 +20,8 @@ public class IntervalValidationTest {
     protected Subject subject;
     private DateTimeService dateTimeService;
 
-    public IntervalValidationTest(String dateTo, String timeFrom, String dateFrom, String timeTo) {
+
+    public IntervalValidationTestSetup(String dateTo, String timeFrom, String dateFrom, String timeTo) {
         this.dateTo = dateTo;
         this.timeFrom = timeFrom;
         this.dateFrom = dateFrom;

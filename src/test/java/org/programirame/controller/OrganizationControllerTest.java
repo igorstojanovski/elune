@@ -8,13 +8,13 @@ import org.programirame.exceptions.InvalidDataException;
 import org.programirame.models.Organization;
 import org.programirame.models.User;
 import org.programirame.services.organizations.OrganizationService;
-import org.springframework.hateoas.EntityLinks;
-import org.springframework.hateoas.Link;
-import org.springframework.hateoas.Resource;
 import org.springframework.http.ResponseEntity;
 
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 public class OrganizationControllerTest {
 
@@ -48,7 +48,7 @@ public class OrganizationControllerTest {
 
     @Test
     public void shouldReturnNonNullResultFromOrganizationService() throws InvalidDataException {
-        ResponseEntity<Organization> result = organizationController.creatOrganization(organization);
+        ResponseEntity result = organizationController.createOrganization(organization);
 
         verify(organizationService, times(1)).createOrganization(organization);
         assertEquals(result.getBody(), organizationCreated);
