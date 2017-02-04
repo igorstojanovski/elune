@@ -5,7 +5,11 @@ import org.junit.Before;
 import org.junit.Test;
 import org.programirame.exceptions.EventOutOfBoundsException;
 import org.programirame.exceptions.InvalidDataException;
-import org.programirame.models.*;
+import org.programirame.models.Event;
+import org.programirame.models.OfferedService;
+import org.programirame.models.Organization;
+import org.programirame.models.Subject;
+import org.programirame.models.Timetable;
 import org.programirame.models.utility.HourInterval;
 import org.programirame.repositories.EventRepository;
 import org.programirame.services.DateTimeService;
@@ -137,10 +141,5 @@ public class EventServiceTest {
         subject.setTimetable(timetable);
 
         return subject;
-    }
-
-    @Test
-    public void shouldThrowExceptionIfEventOverlapsWithBusyWholeDayEvent() {
-
     }
 }

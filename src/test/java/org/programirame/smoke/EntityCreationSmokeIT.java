@@ -2,10 +2,15 @@ package org.programirame.smoke;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.programirame.models.*;
+import org.programirame.models.Event;
+import org.programirame.models.Organization;
+import org.programirame.models.Subject;
+import org.programirame.models.Timetable;
+import org.programirame.models.User;
+import org.programirame.models.UserTypes;
+import org.programirame.models.WholeDayEvent;
 import org.programirame.models.utility.HourInterval;
 import org.programirame.services.DateTimeService;
 import org.programirame.utilities.TestUtilities;
@@ -20,7 +25,6 @@ import org.springframework.test.web.servlet.MvcResult;
 import java.time.DayOfWeek;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -30,16 +34,16 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 public class EntityCreationSmokeIT {
 
-    public static final String NAME = "Igor";
-    public static final String SURNAME = "Stojanovski";
-    public static final String USER = "igorce";
-    public static final String DUMMY_PASS = "dummyPass";
-    public static final String API_USER = "/api/user/";
-    public static final String CODE_CASTLE = "Code Castle";
-    public static final String START_TIME = "08:00";
-    public static final String END_TIME = "17:00";
-    public static final String API_ORGANIZATION = "/api/organization";
-    public static final String WHOLE_DAY_EVENT_DATE = "2017-02-28";
+    private static final String NAME = "Igor";
+    private static final String SURNAME = "Stojanovski";
+    private static final String USER = "igorce";
+    private static final String DUMMY_PASS = "dummyPass";
+    private static final String API_USER = "/api/user/";
+    private static final String CODE_CASTLE = "Code Castle";
+    private static final String START_TIME = "08:00";
+    private static final String END_TIME = "17:00";
+    private static final String API_ORGANIZATION = "/api/organization";
+    private static final String WHOLE_DAY_EVENT_DATE = "2017-02-28";
     @Autowired
     private MockMvc mockMvc;
 

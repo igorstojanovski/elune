@@ -29,10 +29,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 public class SubjectControllerIT {
 
-    public static final String START_TIME = "08:00";
-    public static final String END_TIME = "17:00";
+    private static final String START_TIME = "08:00";
+    private static final String END_TIME = "17:00";
     @Autowired
-    DateTimeService dateTimeService;
+    private DateTimeService dateTimeService;
     @Autowired
     private MockMvc mockMvc;
 

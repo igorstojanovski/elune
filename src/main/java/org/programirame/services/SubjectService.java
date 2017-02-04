@@ -11,14 +11,14 @@ import java.util.List;
 @Service
 public class SubjectService {
 
-    public static final String YYYY_MM_DD = "yyyy-MM-dd";
+    private static final String YYYY_MM_DD = "yyyy-MM-dd";
     private final SubjectRepository subjectRepository;
 
     @Autowired
-    DateTimeService dateTimeService;
+    private DateTimeService dateTimeService;
 
     @Autowired
-    public SubjectService(SubjectRepository subjectRepository) {
+    SubjectService(SubjectRepository subjectRepository) {
         this.subjectRepository = subjectRepository;
     }
 
