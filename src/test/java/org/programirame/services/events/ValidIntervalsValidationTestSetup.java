@@ -13,9 +13,9 @@ import java.util.Collection;
 import static org.junit.Assert.assertNull;
 
 @RunWith(Parameterized.class)
-public class ValidIntervalsValidationTest extends IntervalValidationTest {
+public class ValidIntervalsValidationTestSetup extends IntervalValidationTestSetup {
 
-    public ValidIntervalsValidationTest(String dateFrom, String timeFrom, String dateTo, String timeTo) {
+    public ValidIntervalsValidationTestSetup(String dateFrom, String timeFrom, String dateTo, String timeTo) {
         super(dateTo, timeFrom, dateFrom, timeTo);
     }
 
@@ -31,9 +31,7 @@ public class ValidIntervalsValidationTest extends IntervalValidationTest {
 
     @Before
     public void setUp() {
-
         before();
-
     }
 
     @Test

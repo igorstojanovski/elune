@@ -5,6 +5,7 @@ import org.programirame.exceptions.InvalidDataException;
 import org.programirame.models.Event;
 import org.programirame.models.Subject;
 import org.programirame.models.Timetable;
+import org.programirame.models.WholeDayEvent;
 import org.programirame.models.utility.HourInterval;
 import org.programirame.repositories.EventRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -80,10 +81,30 @@ public class EventService {
             throw new EventOutOfBoundsException();
         }
 
-        if (isEventOutOfBounds(event, subject)) {
+        if (isEventOutOfSubjectTimeTable(event, subject)) {
             throw new EventOutOfBoundsException();
         }
 
+        validateAgainstScheduledEvents(event, subject);
+
+        validateAgainstWholeDayEvents(event, subject);
+    }
+
+    private void validateAgainstWholeDayEvents(Event event, Subject subject) throws EventOutOfBoundsException {
+        List<WholeDayEvent> wholeDayEvents = subject.getWholeDayEvents();
+
+        for (WholeDayEvent wholeDayEvent : wholeDayEvents) {
+            if (wholeDayEvent.isBusy() && eventOverlapsWithWholeDayEvent(event, wholeDayEvent)) {
+                throw new EventOutOfBoundsException();
+            }
+        }
+    }
+
+    private boolean eventOverlapsWithWholeDayEvent(Event event, WholeDayEvent wholeDayEvent) {
+        return event.getFromDate().toLocalDate().equals(wholeDayEvent.getLocalDate());
+    }
+
+    private void validateAgainstScheduledEvents(Event event, Subject subject) throws EventOutOfBoundsException {
         List<Event> events = subject.getEvents();
         for (Event scheduledEvent : events) {
             if (areEventsOverlapping(event, scheduledEvent)) {
@@ -137,28 +158,58 @@ public class EventService {
                 newEvent.getFromDate().isBefore(referentEvent.getToDate());
     }
 
-    private boolean isEventOutOfBounds(Event event, Subject subject) throws EventOutOfBoundsException {
+    /**
+     * Checks if the event is out of bounds for the given subject. The bounds are set by the TimeTable
+     * of the Subject.
+     *
+     * @param event
+     * @param subject
+     * @return
+     * @throws EventOutOfBoundsException
+     */
+    private boolean isEventOutOfSubjectTimeTable(Event event, Subject subject) throws EventOutOfBoundsException {
+        HourInterval hourInterval = getHourInterval(event, subject);
+        LocalDate eventDate = getLocalDate(event.getFromDate());
+
+        return isEventOutOfHourlyBoundsForTheDate(event, hourInterval, eventDate);
+    }
+
+    /**
+     * Checks if the {@link Event} is in the bounds of the given HourlyInterval for the given
+     * date.
+     *
+     * @param event        The {@link Event} that we need to check.
+     * @param hourInterval The hourly referent interval.
+     * @param eventDate    The referent date.
+     * @return true if the event is out of bounds.
+     */
+    public boolean isEventOutOfHourlyBoundsForTheDate(Event event, HourInterval hourInterval, LocalDate eventDate) {
         boolean isOutOfBounds = false;
+        LocalDateTime intervalStartDateTime
+                = combineIntoLocalDateTime(eventDate, LocalTime.parse(hourInterval.getStartTime()));
+        LocalDateTime intervalEndDateTime
+                = combineIntoLocalDateTime(eventDate, LocalTime.parse(hourInterval.getEndTime()));
 
-        Timetable timeTable = subject.getTimetable();
-        HourInterval dailyInterval = timeTable.getDailyHours().get(event.getFromDate().getDayOfWeek());
-
-        LocalDateTime eventFromDateTime = event.getFromDate();
-
-        LocalDate eventDate = LocalDate.of(eventFromDateTime.getYear(), eventFromDateTime.getMonth(),
-                eventFromDateTime.getDayOfMonth());
-
-        LocalDateTime intervalStartDateTime = LocalDateTime.of(eventDate,
-                LocalTime.parse(dailyInterval.getStartTime()));
-        LocalDateTime intervalEndDateTime = LocalDateTime.of(eventDate,
-                LocalTime.parse(dailyInterval.getEndTime()));
-
-        if (intervalStartDateTime.isAfter(eventFromDateTime) ||
+        if (intervalStartDateTime.isAfter(event.getFromDate()) ||
                 intervalEndDateTime.isBefore(event.getToDate())) {
             isOutOfBounds = true;
         }
-
         return isOutOfBounds;
+    }
+
+    private LocalDateTime combineIntoLocalDateTime(LocalDate eventDate, LocalTime parse) {
+        return LocalDateTime.of(eventDate,
+                parse);
+    }
+
+    private LocalDate getLocalDate(LocalDateTime localDateTime) {
+        return LocalDate.of(localDateTime.getYear(), localDateTime.getMonth(),
+                localDateTime.getDayOfMonth());
+    }
+
+    private HourInterval getHourInterval(Event event, Subject subject) {
+        Timetable timeTable = subject.getTimetable();
+        return timeTable.getDailyHours().get(event.getFromDate().getDayOfWeek());
     }
 
     /**

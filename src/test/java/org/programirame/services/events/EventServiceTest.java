@@ -138,4 +138,9 @@ public class EventServiceTest {
 
         return subject;
     }
+
+    @Test
+    public void shouldThrowExceptionIfEventOverlapsWithBusyWholeDayEvent() {
+
+    }
 }

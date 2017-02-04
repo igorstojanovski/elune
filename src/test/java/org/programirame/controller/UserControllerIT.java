@@ -25,14 +25,12 @@ public class UserControllerIT {
 
     @Autowired
     private MockMvc mockMvc;
-    private User userRequested;
-
 
 
     @Test
     public void shouldCreateNewUser() throws Exception {
 
-        userRequested = new User("igor", "stojanovski", "igorce", "igorce");
+        User userRequested = new User("igor", "stojanovski", "igorce", "igorce");
 
         MvcResult result = mockMvc.perform(post("/api/user")
                 .content(TestUtilities.asJsonString(userRequested))

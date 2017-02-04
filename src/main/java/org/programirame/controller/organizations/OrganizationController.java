@@ -5,11 +5,13 @@ import org.programirame.models.Organization;
 import org.programirame.models.contact.PhoneContact;
 import org.programirame.services.organizations.OrganizationService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.hateoas.EntityLinks;
-import org.springframework.hateoas.ExposesResourceFor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * Controller for processing requests for the {@link Organization} resource.
@@ -32,7 +34,7 @@ public class OrganizationController {
      * @return The created organization.
      */
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity creatOrganization(@RequestBody Organization organization) throws InvalidDataException {
+    public ResponseEntity createOrganization(@RequestBody Organization organization) throws InvalidDataException {
         Organization createdOrganization = organizationService.createOrganization(organization);
         return new ResponseEntity<>(createdOrganization, HttpStatus.CREATED);
     }

@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.*;
 
 public class UserControllerTest {
@@ -49,8 +50,9 @@ public class UserControllerTest {
 
     @Test
     public void shouldCallUserServiceCreateMethod() throws InvalidDataException {
-        userController.registerNewUser(userRequested);
-        Mockito.verify(userService).createUser(userRequested);
+        ResponseEntity<User> result = userController.registerNewUser(userRequested);
+        verify(userService).createUser(userRequested);
+        assertNotNull(result);
     }
 
     @Test
@@ -62,9 +64,10 @@ public class UserControllerTest {
 
     @Test
     public void shouldCallUserServiceToGetAllUsers() {
-        userController.getAllUsers();
+        ResponseEntity result = userController.getAllUsers();
 
         verify(userService, times(1)).getAllUsers();
+        assertNotNull(result);
     }
 
     @Test
