@@ -30,7 +30,7 @@ public class UserControllerIT {
     @Test
     public void shouldCreateNewUser() throws Exception {
 
-        User userRequested = new User("igor", "stojanovski", "igorce", "igorce");
+        User userRequested = new User("igor", "stojanovski", "igorce", "igorcepass");
 
         MvcResult result = mockMvc.perform(post("/api/user")
                 .content(TestUtilities.asJsonString(userRequested))

@@ -14,6 +14,10 @@ import java.util.List;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
+import static org.programirame.services.events.TestingConstants.NAME;
+import static org.programirame.services.events.TestingConstants.PASSWORD;
+import static org.programirame.services.events.TestingConstants.SURNAME;
+import static org.programirame.services.events.TestingConstants.USERNAME;
 
 public class UserServiceTest {
 
@@ -31,8 +35,8 @@ public class UserServiceTest {
 
         userService = new UserService(userRepository);
 
-        userRequested = new User("igor", "stojanovski", "igorce", "igorce");
-        userCreated = new User("igor", "stojanovski", "igorce", "igorce");
+        userRequested = new User(NAME, SURNAME, USERNAME, PASSWORD);
+        userCreated = new User(NAME, SURNAME, USERNAME, PASSWORD);
         userCreated.setId(id);
 
         when(userRepository.save(userRequested)).thenReturn(userCreated);
@@ -54,34 +58,34 @@ public class UserServiceTest {
     @Test(expected = InvalidDataException.class)
     public void shouldNotCreateUserIfItHasNoUsername() throws InvalidDataException {
         User user = new User();
-        user.setName("Igor");
+        user.setName(NAME);
         userService.createUser(new User());
     }
 
     @Test(expected = InvalidDataException.class)
     public void shouldNotCreateUserIfItHasNoName() throws InvalidDataException {
         User user = new User();
-        user.setPassword("test");
+        user.setPassword(PASSWORD);
         user.setUserType(UserTypes.ADMIN);
-        user.setUsername("igorce");
+        user.setUsername(USERNAME);
         userService.createUser(new User());
     }
 
     @Test(expected = InvalidDataException.class)
     public void shouldNotCreateUserIfItHasNoPassword() throws InvalidDataException {
         User user = new User();
-        user.setPassword("test");
+        user.setPassword(PASSWORD);
         user.setUserType(UserTypes.ADMIN);
-        user.setUsername("igorce");
+        user.setUsername(USERNAME);
         userService.createUser(new User());
     }
 
     @Test(expected = InvalidDataException.class)
     public void shouldNotCreateUserIfItHasNoUserType() throws InvalidDataException {
         User user = new User();
-        user.setName("Igor");
-        user.setPassword("test");
-        user.setUsername("igorce");
+        user.setName(NAME);
+        user.setPassword(PASSWORD);
+        user.setUsername(USERNAME);
         userService.createUser(new User());
     }
 

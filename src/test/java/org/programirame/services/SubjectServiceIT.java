@@ -19,6 +19,8 @@ import static org.junit.Assert.assertNotNull;
 @SpringBootTest
 public class SubjectServiceIT {
 
+    private static final String START_TIME = "0800";
+    private static final String END_TIME = "1700";
     @Autowired
     private SubjectRepository subjectRepository;
     private SubjectService subjectService;
@@ -35,11 +37,11 @@ public class SubjectServiceIT {
 
         Timetable timetable = new Timetable();
 
-        timetable.getDailyHours().put(DayOfWeek.MONDAY, new HourInterval("0800", "1700"));
-        timetable.getDailyHours().put(DayOfWeek.TUESDAY, new HourInterval("0800", "1700"));
-        timetable.getDailyHours().put(DayOfWeek.WEDNESDAY, new HourInterval("0800", "1700"));
-        timetable.getDailyHours().put(DayOfWeek.THURSDAY, new HourInterval("0800", "1700"));
-        timetable.getDailyHours().put(DayOfWeek.FRIDAY, new HourInterval("0800", "1700"));
+        timetable.getDailyHours().put(DayOfWeek.MONDAY, new HourInterval(START_TIME, END_TIME));
+        timetable.getDailyHours().put(DayOfWeek.TUESDAY, new HourInterval(START_TIME, END_TIME));
+        timetable.getDailyHours().put(DayOfWeek.WEDNESDAY, new HourInterval(START_TIME, END_TIME));
+        timetable.getDailyHours().put(DayOfWeek.THURSDAY, new HourInterval(START_TIME, END_TIME));
+        timetable.getDailyHours().put(DayOfWeek.FRIDAY, new HourInterval(START_TIME, END_TIME));
 
         subject.setTimetable(timetable);
 
