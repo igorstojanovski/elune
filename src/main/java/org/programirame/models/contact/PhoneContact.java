@@ -4,7 +4,13 @@ package org.programirame.models.contact;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.programirame.models.Organization;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class PhoneContact {

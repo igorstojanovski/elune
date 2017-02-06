@@ -12,6 +12,7 @@ import org.programirame.utilities.TestUtilities;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
@@ -20,6 +21,8 @@ import org.springframework.test.web.servlet.MvcResult;
 import java.time.DayOfWeek;
 
 import static junit.framework.TestCase.assertTrue;
+import static org.programirame.services.events.TestingConstants.TIME_08_00;
+import static org.programirame.services.events.TestingConstants.TIME_17_00;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -27,9 +30,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @AutoConfigureMockMvc
 public class SubjectControllerIT {
-
-    private static final String START_TIME = "08:00";
-    private static final String END_TIME = "17:00";
 
     @Autowired
     private MockMvc mockMvc;
@@ -40,11 +40,11 @@ public class SubjectControllerIT {
         Subject subject = new Subject();
 
         Timetable timetable = new Timetable();
-        timetable.getDailyHours().put(DayOfWeek.MONDAY, new HourInterval(START_TIME, END_TIME));
-        timetable.getDailyHours().put(DayOfWeek.TUESDAY, new HourInterval(START_TIME, END_TIME));
-        timetable.getDailyHours().put(DayOfWeek.WEDNESDAY, new HourInterval(START_TIME, END_TIME));
-        timetable.getDailyHours().put(DayOfWeek.THURSDAY, new HourInterval(START_TIME, END_TIME));
-        timetable.getDailyHours().put(DayOfWeek.FRIDAY, new HourInterval(START_TIME, END_TIME));
+        timetable.getDailyHours().put(DayOfWeek.MONDAY, new HourInterval(TIME_08_00, TIME_17_00));
+        timetable.getDailyHours().put(DayOfWeek.TUESDAY, new HourInterval(TIME_08_00, TIME_17_00));
+        timetable.getDailyHours().put(DayOfWeek.WEDNESDAY, new HourInterval(TIME_08_00, TIME_17_00));
+        timetable.getDailyHours().put(DayOfWeek.THURSDAY, new HourInterval(TIME_08_00, TIME_17_00));
+        timetable.getDailyHours().put(DayOfWeek.FRIDAY, new HourInterval(TIME_08_00, TIME_17_00));
 
         subject.setTimetable(timetable);
 
@@ -59,7 +59,7 @@ public class SubjectControllerIT {
                 .content(TestUtilities.asJsonString(subject))
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().is(201))
+                .andExpect(status().is(HttpStatus.CREATED.value()))
                 .andReturn();
 
         ObjectMapper mapper = new ObjectMapper();

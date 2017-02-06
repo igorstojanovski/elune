@@ -10,6 +10,13 @@ import org.programirame.models.Event;
 import java.util.Arrays;
 import java.util.Collection;
 
+import static org.programirame.services.events.TestingConstants.DATE_02_27;
+import static org.programirame.services.events.TestingConstants.TIME_09_00;
+import static org.programirame.services.events.TestingConstants.TIME_10_30;
+import static org.programirame.services.events.TestingConstants.TIME_11_00;
+import static org.programirame.services.events.TestingConstants.TIME_13_00;
+import static org.programirame.services.events.TestingConstants.TIME_14_00;
+
 @RunWith(Parameterized.class)
 public class InvalidIntervalsValidationTestSetup extends IntervalValidationTestSetup {
 
@@ -21,10 +28,10 @@ public class InvalidIntervalsValidationTestSetup extends IntervalValidationTestS
     @Parameterized.Parameters
     public static Collection invalidIntervalValues() {
         return Arrays.asList(new String[][]{
-                {"2017-02-27", "09:00", "2017-02-27", "11:00"},
-                {"2017-02-27", "11:00", "2017-02-27", "13:00"},
-                {"2017-02-27", "09:00", "2017-02-27", "14:00"},
-                {"2017-02-27", "10:30", "2017-02-27", "11:30"}
+                {DATE_02_27, TIME_09_00, DATE_02_27, TIME_11_00},
+                {DATE_02_27, TIME_11_00, DATE_02_27, TIME_13_00},
+                {DATE_02_27, TIME_09_00, DATE_02_27, TIME_14_00},
+                {DATE_02_27, TIME_10_30, DATE_02_27, TIME_10_30}
         });
     }
 
