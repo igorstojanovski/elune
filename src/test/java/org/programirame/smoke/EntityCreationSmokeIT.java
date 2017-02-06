@@ -16,6 +16,7 @@ import org.programirame.utilities.TestUtilities;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
@@ -24,6 +25,13 @@ import org.springframework.test.web.servlet.MvcResult;
 import java.time.DayOfWeek;
 
 import static org.junit.Assert.assertEquals;
+import static org.programirame.services.events.TestingConstants.DATE_02_27;
+import static org.programirame.services.events.TestingConstants.NAME;
+import static org.programirame.services.events.TestingConstants.PASSWORD;
+import static org.programirame.services.events.TestingConstants.SURNAME;
+import static org.programirame.services.events.TestingConstants.TIME_11_00;
+import static org.programirame.services.events.TestingConstants.TIME_12_00;
+import static org.programirame.services.events.TestingConstants.USERNAME;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -33,10 +41,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 public class EntityCreationSmokeIT {
 
-    private static final String NAME = "Igor";
-    private static final String SURNAME = "Stojanovski";
-    private static final String USER = "igorce";
-    private static final String DUMMY_PASS = "dummyPass";
     private static final String API_USER = "/api/user/";
     private static final String CODE_CASTLE = "Code Castle";
     private static final String START_TIME = "08:00";
@@ -54,9 +58,9 @@ public class EntityCreationSmokeIT {
         User user = new User();
         user.setName(NAME);
         user.setSurname(SURNAME);
-        user.setUsername(USER);
+        user.setUsername(USERNAME);
         user.setUserType(UserTypes.ADMIN);
-        user.setPassword(DUMMY_PASS);
+        user.setPassword(PASSWORD);
 
         MvcResult result = postMvcResult(user, API_USER);
         user = mapper.readValue(result.getResponse().getContentAsString(), User.class);
@@ -97,17 +101,17 @@ public class EntityCreationSmokeIT {
         subject = mapper.readValue(result.getResponse().getContentAsString(), Subject.class);
 
         Event event = new Event();
-        event.setDateFrom("2017-02-27");
-        event.setDateTo("2017-02-27");
-        event.setTimeFrom("11:00");
-        event.setTimeTo("12:00");
+        event.setDateFrom(DATE_02_27);
+        event.setDateTo(DATE_02_27);
+        event.setTimeFrom(TIME_11_00);
+        event.setTimeTo(TIME_12_00);
         event.setSubject(subject);
         event.setCreatedBy(user);
         event.setOrganization(organization);
 
         postMvcResult(event, "/api/event");
 
-        result = getMvcResult("/api/subject/" + subject.getId(), 200);
+        result = getMvcResult("/api/subject/" + subject.getId(), HttpStatus.OK.value());
         subject = mapper.readValue(result.getResponse().getContentAsString(), Subject.class);
 
         assertEquals(subject.getEvents().size(), 1);
@@ -119,7 +123,7 @@ public class EntityCreationSmokeIT {
                 .content(TestUtilities.asJsonString(object))
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().is(201))
+                .andExpect(status().is(HttpStatus.CREATED.value()))
                 .andReturn();
     }
 

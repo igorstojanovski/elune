@@ -78,7 +78,8 @@ public class EventServiceTest {
     }
 
     @Test(expected = EventOutOfBoundsException.class)
-    public void shouldThrowAnExceptionIfEventEndsInDifferentDay() throws InvalidDataException, EventOutOfBoundsException {
+    public void shouldThrowAnExceptionIfEventEndsInDifferentDay() throws InvalidDataException,
+            EventOutOfBoundsException {
         Event eventOutOfBounds = getEventWithoutId(DATE_02_27, TIME_09_00, DATE_02_28, TIME_08_00);
         eventOutOfBounds.setSubject(getSetupSubject());
         doReturn(getSetupSubject()).when(subjectService).getSubject(1L);
