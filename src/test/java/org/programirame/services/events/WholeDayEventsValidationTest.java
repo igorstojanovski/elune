@@ -10,7 +10,7 @@ import org.programirame.services.DateTimeService;
 
 public class WholeDayEventsValidationTest {
 
-    public static final String WHOLE_DAY_EVENT_DATE = "2017-02-27";
+    private static final String WHOLE_DAY_EVENT_DATE = "2017-02-27";
     private IntervalValidationTestSetup setup;
 
     @Before
@@ -34,7 +34,7 @@ public class WholeDayEventsValidationTest {
     private Event setupSubjectWithWholeDayEvent(boolean busy, String wholeDayEventDate) {
         WholeDayEvent wholeDayEvent = new WholeDayEvent();
         DateTimeService dateTimeService = new DateTimeService();
-        wholeDayEvent.setLocalDate(dateTimeService.getLocalDate(WHOLE_DAY_EVENT_DATE, "yyyy-MM-dd"));
+        wholeDayEvent.setLocalDate(dateTimeService.getLocalDate(wholeDayEventDate, "yyyy-MM-dd"));
         wholeDayEvent.setBusy(busy);
         setup.subject.getWholeDayEvents().add(wholeDayEvent);
 

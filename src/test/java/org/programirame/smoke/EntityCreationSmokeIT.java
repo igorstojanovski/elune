@@ -12,7 +12,6 @@ import org.programirame.models.User;
 import org.programirame.models.UserTypes;
 import org.programirame.models.WholeDayEvent;
 import org.programirame.models.utility.HourInterval;
-import org.programirame.services.DateTimeService;
 import org.programirame.utilities.TestUtilities;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -46,9 +45,6 @@ public class EntityCreationSmokeIT {
     private static final String WHOLE_DAY_EVENT_DATE = "2017-02-28";
     @Autowired
     private MockMvc mockMvc;
-
-    @Autowired
-    private DateTimeService dateTimeService;
 
     @Test
     public void shouldCreateNewUser() throws Exception {
