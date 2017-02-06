@@ -16,6 +16,7 @@ import static org.mockito.Mockito.when;
 
 public class OrganizationsServiceTest {
 
+    private static final String NEW_ORG_NAME = "New Org";
     private Organization organizationCreated;
     private Organization organization;
     private OrganizationService organizationService;
@@ -31,11 +32,11 @@ public class OrganizationsServiceTest {
         owner.setId(1L);
 
         organization = new Organization();
-        organization.setName("New Org");
+        organization.setName(NEW_ORG_NAME);
         organization.setOwner(owner);
 
         organizationCreated = new Organization();
-        organizationCreated.setName("New Org");
+        organizationCreated.setName(NEW_ORG_NAME);
         organizationCreated.setOwner(owner);
         organizationCreated.setId(1L);
 
@@ -53,14 +54,14 @@ public class OrganizationsServiceTest {
     @Test(expected = InvalidDataException.class)
     public void shouldNotCreateOrganizationWithoutUser() throws InvalidDataException {
         Organization organization = new Organization();
-        organization.setName("Code castle");
+        organization.setName(NEW_ORG_NAME);
         organizationService.createOrganization(organization);
     }
 
     @Test(expected = InvalidDataException.class)
     public void shouldNotCreateOrganizationIfUserNotAdmin() throws InvalidDataException {
         Organization organization = new Organization();
-        organization.setName("Code castle");
+        organization.setName(NEW_ORG_NAME);
         organization.setOwner(owner);
         organizationService.createOrganization(organization);
     }

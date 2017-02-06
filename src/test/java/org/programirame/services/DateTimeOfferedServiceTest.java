@@ -9,13 +9,13 @@ import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Collection;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 @RunWith(Parameterized.class)
 public class DateTimeOfferedServiceTest {
 
-    public static final String CURRENTLY_ONLY_ALLOWED_DATE_FORMAT = "yyyy-MM-dd";
-    public static final String CURRENTLY_ONLY_ALLOWED_TIME_FORMAT = "HH:mm";
+    private static final String CURRENTLY_ONLY_ALLOWED_DATE_FORMAT = "yyyy-MM-dd";
+    private static final String CURRENTLY_ONLY_ALLOWED_TIME_FORMAT = "HH:mm";
     private final String date;
     private final String time;
     private DateTimeService dateTimeService;
@@ -30,7 +30,7 @@ public class DateTimeOfferedServiceTest {
         return Arrays.asList(
                 new String[]{"2017-01-01", "00:00"},
                 new String[]{"2017-01-02", "23:15"},
-                new String[]{"2017-12-01", "00:00"},
+                new String[]{"2017-12-01", "00:20"},
                 new String[]{"2017-11-11", "00:10"},
                 new String[]{"2016-01-01", "22:15"});
     }

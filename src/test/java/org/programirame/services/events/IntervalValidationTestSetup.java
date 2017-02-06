@@ -1,6 +1,10 @@
 package org.programirame.services.events;
 
-import org.programirame.models.*;
+import org.programirame.models.Event;
+import org.programirame.models.OfferedService;
+import org.programirame.models.Organization;
+import org.programirame.models.Subject;
+import org.programirame.models.Timetable;
 import org.programirame.models.utility.HourInterval;
 import org.programirame.repositories.EventRepository;
 import org.programirame.services.DateTimeService;
@@ -12,6 +16,11 @@ import java.time.DayOfWeek;
 import static org.mockito.Mockito.mock;
 
 public class IntervalValidationTestSetup {
+    private static final String TIME_08_00 = "08:00";
+    private static final String TIME_17_00 = "17:00";
+    private static final String DATE_02_27 = "2017-02-27";
+    private static final String TIME_12_00 = "12:00";
+    private static final String TIME_10_00 = "10:00";
     protected final String dateFrom;
     protected final String dateTo;
     protected final String timeFrom;
@@ -39,17 +48,17 @@ public class IntervalValidationTestSetup {
 
         subject = new Subject();
         subject.setTimetable(getTimeTable());
-        subject.getEvents().add(getEvent("2017-02-27", "10:00", "2017-02-27", "12:00"));
+        subject.getEvents().add(getEvent(DATE_02_27, TIME_10_00, DATE_02_27, TIME_12_00));
     }
 
     protected Timetable getTimeTable() {
         Timetable timetable = new Timetable();
 
-        timetable.getDailyHours().put(DayOfWeek.MONDAY, new HourInterval("08:00", "17:00"));
-        timetable.getDailyHours().put(DayOfWeek.TUESDAY, new HourInterval("08:00", "17:00"));
-        timetable.getDailyHours().put(DayOfWeek.WEDNESDAY, new HourInterval("08:00", "17:00"));
-        timetable.getDailyHours().put(DayOfWeek.THURSDAY, new HourInterval("08:00", "17:00"));
-        timetable.getDailyHours().put(DayOfWeek.FRIDAY, new HourInterval("08:00", "17:00"));
+        timetable.getDailyHours().put(DayOfWeek.MONDAY, new HourInterval(TIME_08_00, TIME_17_00));
+        timetable.getDailyHours().put(DayOfWeek.TUESDAY, new HourInterval(TIME_08_00, TIME_17_00));
+        timetable.getDailyHours().put(DayOfWeek.WEDNESDAY, new HourInterval(TIME_08_00, TIME_17_00));
+        timetable.getDailyHours().put(DayOfWeek.THURSDAY, new HourInterval(TIME_08_00, TIME_17_00));
+        timetable.getDailyHours().put(DayOfWeek.FRIDAY, new HourInterval(TIME_08_00, TIME_17_00));
 
         return timetable;
     }

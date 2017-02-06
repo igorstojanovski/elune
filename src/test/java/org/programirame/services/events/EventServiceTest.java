@@ -23,6 +23,13 @@ import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
+import static org.programirame.services.events.TestingConstants.DATE_02_27;
+import static org.programirame.services.events.TestingConstants.DATE_02_28;
+import static org.programirame.services.events.TestingConstants.TIME_07_00;
+import static org.programirame.services.events.TestingConstants.TIME_08_00;
+import static org.programirame.services.events.TestingConstants.TIME_08_10;
+import static org.programirame.services.events.TestingConstants.TIME_09_00;
+import static org.programirame.services.events.TestingConstants.TIME_17_00;
 
 public class EventServiceTest {
 
@@ -39,8 +46,8 @@ public class EventServiceTest {
         subjectService = mock(SubjectService.class);
 
         eventService = new EventService(eventRepository, dateTimeService, subjectService);
-        Event eventWithoutId = getEventWithoutId("2017-02-27", "08:00", "2017-02-27", "09:00");
-        eventWithId = getEventWithoutId("2017-02-27", "07:00", "2017-02-27", "09:00");
+        Event eventWithoutId = getEventWithoutId(DATE_02_27, TIME_08_00, DATE_02_27, TIME_09_00);
+        eventWithId = getEventWithoutId(DATE_02_27, TIME_07_00, DATE_02_27, TIME_09_00);
         eventWithId.setId(1L);
 
         setUpSubjectService();
@@ -64,7 +71,7 @@ public class EventServiceTest {
 
     @Test(expected = EventOutOfBoundsException.class)
     public void shouldThrowAnExceptionIfAfterIsBeforeTo() throws InvalidDataException, EventOutOfBoundsException {
-        Event eventOutOfBounds = getEventWithoutId("2017-02-27", "09:00", "2017-02-27", "08:00");
+        Event eventOutOfBounds = getEventWithoutId(DATE_02_27, TIME_09_00, DATE_02_27, TIME_08_00);
         eventOutOfBounds.setSubject(getSetupSubject());
         doReturn(getSetupSubject()).when(subjectService).getSubject(1L);
         eventService.createEvent(eventOutOfBounds);
@@ -72,7 +79,7 @@ public class EventServiceTest {
 
     @Test(expected = EventOutOfBoundsException.class)
     public void shouldThrowAnExceptionIfEventEndsInDifferentDay() throws InvalidDataException, EventOutOfBoundsException {
-        Event eventOutOfBounds = getEventWithoutId("2017-02-27", "09:00", "2017-02-28", "08:00");
+        Event eventOutOfBounds = getEventWithoutId(DATE_02_27, TIME_09_00, DATE_02_28, TIME_08_00);
         eventOutOfBounds.setSubject(getSetupSubject());
         doReturn(getSetupSubject()).when(subjectService).getSubject(1L);
         eventService.createEvent(eventOutOfBounds);
@@ -88,7 +95,7 @@ public class EventServiceTest {
 
     @Test(expected = EventOutOfBoundsException.class)
     public void shouldNotCreateEventIfOutOfTimeTable() throws InvalidDataException, EventOutOfBoundsException {
-        Event eventOutOfBounds = getEventWithoutId("2017-02-27", "07:00", "2017-02-27", "09:00");
+        Event eventOutOfBounds = getEventWithoutId(DATE_02_27, TIME_07_00, DATE_02_27, TIME_09_00);
         eventOutOfBounds.setSubject(getSetupSubject());
         doReturn(getSetupSubject()).when(subjectService).getSubject(1L);
         eventService.createEvent(eventOutOfBounds);
@@ -96,7 +103,7 @@ public class EventServiceTest {
 
     @Test
     public void shouldCreateEventIfInTimeTable() throws InvalidDataException, EventOutOfBoundsException {
-        Event eventOutOfBounds = getEventWithoutId("2017-02-27", "08:10", "2017-02-27", "09:00");
+        Event eventOutOfBounds = getEventWithoutId(DATE_02_27, TIME_08_10, DATE_02_27, TIME_09_00);
         eventOutOfBounds.setSubject(getSetupSubject());
         doReturn(getSetupSubject()).when(subjectService).getSubject(1L);
         doReturn(eventOutOfBounds).when(eventRepository).save(eventOutOfBounds);
@@ -132,11 +139,11 @@ public class EventServiceTest {
 
         Timetable timetable = new Timetable();
 
-        timetable.getDailyHours().put(DayOfWeek.MONDAY, new HourInterval("08:00", "17:00"));
-        timetable.getDailyHours().put(DayOfWeek.TUESDAY, new HourInterval("08:00", "17:00"));
-        timetable.getDailyHours().put(DayOfWeek.WEDNESDAY, new HourInterval("08:00", "17:00"));
-        timetable.getDailyHours().put(DayOfWeek.THURSDAY, new HourInterval("08:00", "17:00"));
-        timetable.getDailyHours().put(DayOfWeek.FRIDAY, new HourInterval("08:00", "17:00"));
+        timetable.getDailyHours().put(DayOfWeek.MONDAY, new HourInterval(TIME_08_00, TIME_17_00));
+        timetable.getDailyHours().put(DayOfWeek.TUESDAY, new HourInterval(TIME_08_00, TIME_17_00));
+        timetable.getDailyHours().put(DayOfWeek.WEDNESDAY, new HourInterval(TIME_08_00, TIME_17_00));
+        timetable.getDailyHours().put(DayOfWeek.THURSDAY, new HourInterval(TIME_08_00, TIME_17_00));
+        timetable.getDailyHours().put(DayOfWeek.FRIDAY, new HourInterval(TIME_08_00, TIME_17_00));
 
         subject.setTimetable(timetable);
 

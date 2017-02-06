@@ -22,6 +22,7 @@ import static org.mockito.Mockito.when;
 
 public class OrganizationControllerTest {
 
+    public static final String NEW_ORG_NAME = "New Org";
     private OrganizationService organizationService;
     private OrganizationController organizationController;
     private Organization organization;
@@ -39,11 +40,11 @@ public class OrganizationControllerTest {
 
         organization = new Organization();
         organization.setId(1L);
-        organization.setName("New Org");
+        organization.setName(NEW_ORG_NAME);
         organization.setOwner(owner);
 
         organizationCreated = new Organization();
-        organizationCreated.setName("New Org");
+        organizationCreated.setName(NEW_ORG_NAME);
         organizationCreated.setOwner(owner);
         organizationCreated.setId(1L);
 
