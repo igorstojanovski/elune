@@ -11,7 +11,9 @@ import org.programirame.repositories.EventRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 
 /**
@@ -162,10 +164,10 @@ public class EventService {
      * Checks if the event is out of bounds for the given subject. The bounds are set by the TimeTable
      * of the Subject.
      *
-     * @param event
-     * @param subject
-     * @return
-     * @throws EventOutOfBoundsException
+     * @param event The Event object we need to check.
+     * @param subject The Subject that we are going to check against.
+     * @return true if the event is out of the Subject's timetable bounds.
+     * @throws EventOutOfBoundsException when the event is out of bounds.
      */
     private boolean isEventOutOfSubjectTimeTable(Event event, Subject subject) throws EventOutOfBoundsException {
         HourInterval hourInterval = getHourInterval(event, subject);
@@ -197,9 +199,8 @@ public class EventService {
         return isOutOfBounds;
     }
 
-    private LocalDateTime combineIntoLocalDateTime(LocalDate eventDate, LocalTime parse) {
-        return LocalDateTime.of(eventDate,
-                parse);
+    private LocalDateTime combineIntoLocalDateTime(LocalDate localDate, LocalTime localTime) {
+        return LocalDateTime.of(localDate, localTime);
     }
 
     private LocalDate getLocalDate(LocalDateTime localDateTime) {

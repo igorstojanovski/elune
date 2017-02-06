@@ -13,7 +13,7 @@ public class DateTimeService {
     /**
      * @param date format '2016-02-14'
      * @param time format '18:32'
-     * @return
+     * @return The newly created {@link LocalDateTime} object.
      */
     public LocalDateTime getLocalDateTime(String date, String time) {
         String iso8061 = date + "T" + time + ":00+01:00";
